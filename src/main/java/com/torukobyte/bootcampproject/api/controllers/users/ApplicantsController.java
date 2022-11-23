@@ -48,4 +48,9 @@ public class ApplicantsController {
     Result delete(@PathVariable int id) {
         return service.delete(id);
     }
+
+    @PostMapping("/become-applicant/{id}")
+    DataResult<GetApplicantResponse> confirm(@RequestParam String about,@PathVariable int id) {
+        return service.becomeApplicant(about, id);
+    }
 }

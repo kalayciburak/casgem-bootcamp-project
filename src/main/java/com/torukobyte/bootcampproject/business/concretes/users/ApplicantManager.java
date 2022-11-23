@@ -1,6 +1,7 @@
 package com.torukobyte.bootcampproject.business.concretes.users;
 
 import com.torukobyte.bootcampproject.business.abstracts.users.ApplicantService;
+import com.torukobyte.bootcampproject.business.abstracts.users.EmployeeService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
 import com.torukobyte.bootcampproject.business.dto.requests.users.applicants.CreateApplicantRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.users.applicants.UpdateApplicantRequest;
@@ -9,10 +10,7 @@ import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.Ge
 import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.GetApplicantResponse;
 import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.UpdateApplicantResponse;
 import com.torukobyte.bootcampproject.core.util.mapping.ModelMapperService;
-import com.torukobyte.bootcampproject.core.util.results.DataResult;
-import com.torukobyte.bootcampproject.core.util.results.Result;
-import com.torukobyte.bootcampproject.core.util.results.SuccessDataResult;
-import com.torukobyte.bootcampproject.core.util.results.SuccessResult;
+import com.torukobyte.bootcampproject.core.util.results.*;
 import com.torukobyte.bootcampproject.entities.users.Applicant;
 import com.torukobyte.bootcampproject.repository.abstracts.users.ApplicantRepository;
 import lombok.AllArgsConstructor;
@@ -24,6 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ApplicantManager implements ApplicantService {
     private ApplicantRepository repository;
+    private EmployeeService employeeService;
     private ModelMapperService mapper;
 
     @Override
@@ -69,5 +68,18 @@ public class ApplicantManager implements ApplicantService {
     public Result delete(int id) {
         repository.deleteById(id);
         return new SuccessResult(Messages.Applicant.Deleted);
+    }
+
+    @Override
+    public DataResult<GetApplicantResponse> becomeApplicant(String about, int id) {
+        if(repository.findById(id).isPresent()) {
+            return new ErrorDataResult<>(null, Messages.Applicant.AlreadyApplicant);
+        }
+        Applicant applicant = mapper.forResponse().map(employeeService.getById(id).getData(), Applicant.class);
+        applicant.setAbout(about);
+        repository.becomeApplicant(about,id);
+        GetApplicantResponse data = mapper.forResponse().map(applicant, GetApplicantResponse.class);
+
+        return new SuccessDataResult<>(data, Messages.Applicant.BecameEmployee);
     }
 }

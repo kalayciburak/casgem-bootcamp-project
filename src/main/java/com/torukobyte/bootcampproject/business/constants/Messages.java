@@ -8,6 +8,8 @@ public class Messages {
         public static final String Deleted = "Applicant deleted.";
         public static final String Listed = "Applicants listed.";
         public static final String ListedById = "Applicant listed by id.";
+        public static String BecameEmployee = "Applicant became employee.";
+        public static String AlreadyApplicant = "Employee already became Applicant!";
         public static final String NotFound = "Applicant not found.";
     }
 
