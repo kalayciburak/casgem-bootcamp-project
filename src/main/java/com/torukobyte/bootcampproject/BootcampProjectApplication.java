@@ -13,7 +13,7 @@ public class BootcampProjectApplication {
     }
 
     @Bean
-    ModelMapper getModelMapper(){
+    ModelMapper getModelMapper() {
         return new ModelMapper();
     }
 }

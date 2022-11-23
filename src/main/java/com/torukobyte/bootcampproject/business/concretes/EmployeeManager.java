@@ -8,9 +8,7 @@ import com.torukobyte.bootcampproject.business.dto.responses.employees.GetAllEmp
 import com.torukobyte.bootcampproject.business.dto.responses.employees.GetEmployeeResponse;
 import com.torukobyte.bootcampproject.business.dto.responses.employees.UpdateEmployeeResponse;
 import com.torukobyte.bootcampproject.core.util.mapping.ModelMapperService;
-import com.torukobyte.bootcampproject.entities.users.Applicant;
 import com.torukobyte.bootcampproject.entities.users.Employee;
-import com.torukobyte.bootcampproject.repository.abstracts.ApplicantRepository;
 import com.torukobyte.bootcampproject.repository.abstracts.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

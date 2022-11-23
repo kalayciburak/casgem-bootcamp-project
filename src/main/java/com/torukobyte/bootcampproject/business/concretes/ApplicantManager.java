@@ -9,9 +9,7 @@ import com.torukobyte.bootcampproject.business.dto.responses.applicants.GetAppli
 import com.torukobyte.bootcampproject.business.dto.responses.applicants.UpdateApplicantResponse;
 import com.torukobyte.bootcampproject.core.util.mapping.ModelMapperService;
 import com.torukobyte.bootcampproject.entities.users.Applicant;
-import com.torukobyte.bootcampproject.entities.users.Employee;
 import com.torukobyte.bootcampproject.repository.abstracts.ApplicantRepository;
-import com.torukobyte.bootcampproject.repository.abstracts.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -66,10 +64,5 @@ public class ApplicantManager implements ApplicantService {
     @Override
     public void delete(int id) {
         repository.deleteById(id);
-    }
-
-    @Override
-    public void becomeApplicant(String about, int id) {
-        repository.becomeApplicant(about, id);
     }
 }

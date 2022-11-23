@@ -35,27 +35,27 @@ public class InstructorManager implements InstructorService {
     @Override
     public GetInstructorResponse getById(int id) {
         Instructor instructor = repository.findById(id).orElseThrow();
-        GetInstructorResponse response = mapper.forResponse().map(instructor,GetInstructorResponse.class);
+        GetInstructorResponse response = mapper.forResponse().map(instructor, GetInstructorResponse.class);
 
         return response;
     }
 
     @Override
     public CreateInstructorResponse add(CreateInstructorRequest request) {
-        Instructor instructor = mapper.forRequest().map(request,Instructor.class);
+        Instructor instructor = mapper.forRequest().map(request, Instructor.class);
         instructor.setId(0);
         repository.save(instructor);
-        CreateInstructorResponse response = mapper.forResponse().map(instructor,CreateInstructorResponse.class);
+        CreateInstructorResponse response = mapper.forResponse().map(instructor, CreateInstructorResponse.class);
 
         return response;
     }
 
     @Override
     public UpdateInstructorResponse update(UpdateInstructorRequest request, int id) {
-        Instructor instructor = mapper.forRequest().map(request,Instructor.class);
+        Instructor instructor = mapper.forRequest().map(request, Instructor.class);
         instructor.setId(id);
         repository.save(instructor);
-        UpdateInstructorResponse response = mapper.forResponse().map(instructor,UpdateInstructorResponse.class);
+        UpdateInstructorResponse response = mapper.forResponse().map(instructor, UpdateInstructorResponse.class);
 
         return response;
     }

@@ -13,7 +13,6 @@ public interface ApplicantService {
     List<GetAllApplicantResponse> getAll();
     GetApplicantResponse getById(int id);
     CreateApplicantResponse add(CreateApplicantRequest request);
-    UpdateApplicantResponse update(UpdateApplicantRequest request,int id);
+    UpdateApplicantResponse update(UpdateApplicantRequest request, int id);
     void delete(int id);
-    void becomeApplicant(String about, int id);
 }

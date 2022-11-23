@@ -46,10 +46,4 @@ public class ApplicantsController {
     void delete(@PathVariable int id) {
         service.delete(id);
     }
-
-    @PostMapping("/{id}/apply")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    void apply(@RequestBody String about, @PathVariable int id) {
-        service.becomeApplicant(about, id);
-    }
 }
