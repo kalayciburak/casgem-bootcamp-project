@@ -17,5 +17,6 @@ public interface ApplicantService {
     DataResult<CreateApplicantResponse> add(CreateApplicantRequest request);
     DataResult<UpdateApplicantResponse> update(UpdateApplicantRequest request, int id);
     Result delete(int id);
-    DataResult<GetApplicantResponse> becomeApplicant(String about, int id);
+    DataResult<GetApplicantResponse> beAnApplicant(String about, int id);
+    Result removeAnApplicant(int id);
 }

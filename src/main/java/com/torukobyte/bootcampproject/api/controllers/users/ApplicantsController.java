@@ -49,8 +49,13 @@ public class ApplicantsController {
         return service.delete(id);
     }
 
-    @PostMapping("/become-applicant/{id}")
-    DataResult<GetApplicantResponse> confirm(@RequestParam String about,@PathVariable int id) {
-        return service.becomeApplicant(about, id);
+    @PostMapping("/be-an-applicant/{id}")
+    DataResult<GetApplicantResponse> beAnApplicant(@RequestParam String about, @PathVariable int id) {
+        return service.beAnApplicant(about, id);
+    }
+
+    @DeleteMapping("/remove-an-applicant/{id}")
+    Result removeAnApplicant(@PathVariable int id) {
+        return service.removeAnApplicant(id);
     }
 }

@@ -14,10 +14,10 @@ public interface ApplicantRepository extends JpaRepository<Applicant, Integer> {
     @Modifying
     @Query(value = "insert into Applicants (about,id) VALUES (:about,:id)", nativeQuery = true)
     @Transactional
-    void becomeApplicant(@Param("about") String about, @Param("id") int id);
+    void beAnApplicant(@Param("about") String about, @Param("id") int id);
 
+    @Modifying
     @Query(value = "delete from Applicants where id = :id", nativeQuery = true)
     @Transactional
-    Applicant removeApplicant(int id);
-
+    void removeAnApplicant(int id);
 }

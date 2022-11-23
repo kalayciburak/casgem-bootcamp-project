@@ -71,15 +71,34 @@ public class ApplicantManager implements ApplicantService {
     }
 
     @Override
-    public DataResult<GetApplicantResponse> becomeApplicant(String about, int id) {
-        if(repository.findById(id).isPresent()) {
-            return new ErrorDataResult<>(null, Messages.Applicant.AlreadyApplicant);
-        }
-        Applicant applicant = mapper.forResponse().map(employeeService.getById(id).getData(), Applicant.class);
-        applicant.setAbout(about);
-        repository.becomeApplicant(about,id);
-        GetApplicantResponse data = mapper.forResponse().map(applicant, GetApplicantResponse.class);
+    public DataResult<GetApplicantResponse> beAnApplicant(String about, int id) {
+        try {
+            if (repository.findById(id).isPresent()) {
+                return new ErrorDataResult<>(null, Messages.Applicant.AlreadyApplicant);
+            }
 
-        return new SuccessDataResult<>(data, Messages.Applicant.BecameEmployee);
+            Applicant applicant = mapper.forResponse().map(employeeService.getById(id).getData(), Applicant.class);
+            applicant.setAbout(about);
+            repository.beAnApplicant(about, id);
+            GetApplicantResponse data = mapper.forResponse().map(applicant, GetApplicantResponse.class);
+
+            return new SuccessDataResult<>(data, Messages.Applicant.BecameEmployee);
+        } catch (Exception e) {
+            return new ErrorDataResult<>(null, Messages.User.NotFound);
+        }
+    }
+
+    @Override
+    public Result removeAnApplicant(int id) {
+        try {
+            if (repository.findById(id).isEmpty()) {
+                return new ErrorResult(Messages.Applicant.NotFound);
+            }
+            repository.removeAnApplicant(id);
+            return new SuccessResult(Messages.Applicant.Deleted);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new ErrorResult(Messages.User.NotFound);
+        }
     }
 }
