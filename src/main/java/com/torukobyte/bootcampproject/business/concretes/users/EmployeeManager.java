@@ -32,11 +32,10 @@ public class EmployeeManager implements EmployeeService {
         List<Employee> employees = repository.findAll();
         List<GetAllEmployeeResponse> data = employees
                 .stream()
-                .map(
-                        employee -> mapper.forResponse().map(employee, GetAllEmployeeResponse.class))
+                .map(employee -> mapper.forResponse().map(employee, GetAllEmployeeResponse.class))
                 .toList();
 
-        return new SuccessDataResult<>(data, Messages.Employee.Listed);
+        return new SuccessDataResult<>(data, Messages.Employee.ListAll);
     }
 
     @Override

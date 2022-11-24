@@ -29,10 +29,10 @@ public class Bootcamp {
     @Column(name = "end_date")
     private LocalDate endDate;
     @Column(name = "state")
-    private int state; // 1 olursa open 2 olursa closed
+    private int state;
     @ManyToOne()
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
-    @OneToMany(mappedBy = "bootcamps")
+    @OneToMany(mappedBy = "bootcamp")
     private List<Application> applications;
 }

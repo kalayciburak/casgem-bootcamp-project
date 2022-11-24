@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -28,5 +27,5 @@ public class Application {
     private User user;
     @ManyToOne()
     @JoinColumn(name = "bootcamp_id")
-    private Bootcamp bootcamps;
+    private Bootcamp bootcamp;
 }

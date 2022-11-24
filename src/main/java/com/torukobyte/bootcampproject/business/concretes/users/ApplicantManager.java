@@ -1,5 +1,6 @@
 package com.torukobyte.bootcampproject.business.concretes.users;
 
+import com.torukobyte.bootcampproject.business.abstracts.BootcampService;
 import com.torukobyte.bootcampproject.business.abstracts.users.ApplicantService;
 import com.torukobyte.bootcampproject.business.abstracts.users.EmployeeService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
@@ -31,11 +32,10 @@ public class ApplicantManager implements ApplicantService {
         List<Applicant> appliicants = repository.findAll();
         List<GetAllApplicantResponse> data = appliicants
                 .stream()
-                .map(
-                        applicant -> mapper.forResponse().map(applicant, GetAllApplicantResponse.class))
+                .map(applicant -> mapper.forResponse().map(applicant, GetAllApplicantResponse.class))
                 .toList();
 
-        return new SuccessDataResult<>(data, Messages.Applicant.Listed);
+        return new SuccessDataResult<>(data, Messages.Applicant.ListAll);
     }
 
     @Override

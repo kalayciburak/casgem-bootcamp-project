@@ -1,6 +1,5 @@
 package com.torukobyte.bootcampproject.entities.users;
 
-import com.torukobyte.bootcampproject.entities.Bootcamp;
 import com.torukobyte.bootcampproject.entities.applications.Application;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,5 +36,5 @@ public class User {
     @Column(name = "password")
     private String password;
     @OneToMany(mappedBy = "user")
-    private Set<Application> applications;
+    private List<Application> applications;
 }

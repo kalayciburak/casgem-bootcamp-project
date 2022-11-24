@@ -6,7 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -19,5 +22,5 @@ public class Instructor extends User {
     @Column(name = "company_name")
     private String companyName;
     @OneToMany(mappedBy = "instructor")
-    private List<Bootcamp> bootcamps;
+    private List<Bootcamp> bootcamp;
 }

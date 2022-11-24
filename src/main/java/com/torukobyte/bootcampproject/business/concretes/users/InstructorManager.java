@@ -35,7 +35,7 @@ public class InstructorManager implements InstructorService {
                 .map(instructor -> mapper.forResponse().map(instructor, GetAllInstructorResponse.class))
                 .toList();
 
-        return new SuccessDataResult<>(data, Messages.Instructor.Listed);
+        return new SuccessDataResult<>(data, Messages.Instructor.ListAll);
     }
 
     @Override
