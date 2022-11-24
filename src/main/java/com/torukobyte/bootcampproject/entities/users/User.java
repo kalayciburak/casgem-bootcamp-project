@@ -1,11 +1,16 @@
 package com.torukobyte.bootcampproject.entities.users;
 
+import com.torukobyte.bootcampproject.entities.Bootcamp;
+import com.torukobyte.bootcampproject.entities.applications.Application;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,8 +28,14 @@ public class User {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth;
+    @Column(name = "national_identity")
+    private String nationalIdentity;
     @Column(name = "email")
     private String email;
     @Column(name = "password")
     private String password;
+    @OneToMany(mappedBy = "user")
+    private Set<Application> applications;
 }

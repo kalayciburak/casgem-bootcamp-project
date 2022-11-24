@@ -20,4 +20,5 @@ public interface ApplicantRepository extends JpaRepository<Applicant, Integer> {
     @Query(value = "delete from Applicants where id = :id", nativeQuery = true)
     @Transactional
     void removeAnApplicant(int id);
+    boolean existsApplicantByNationalIdentity(String nationalIdentity);
 }

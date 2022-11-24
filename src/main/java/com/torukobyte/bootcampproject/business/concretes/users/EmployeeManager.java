@@ -8,6 +8,7 @@ import com.torukobyte.bootcampproject.business.dto.responses.users.employees.Cre
 import com.torukobyte.bootcampproject.business.dto.responses.users.employees.GetAllEmployeeResponse;
 import com.torukobyte.bootcampproject.business.dto.responses.users.employees.GetEmployeeResponse;
 import com.torukobyte.bootcampproject.business.dto.responses.users.employees.UpdateEmployeeResponse;
+import com.torukobyte.bootcampproject.core.util.exceptions.BusinessException;
 import com.torukobyte.bootcampproject.core.util.mapping.ModelMapperService;
 import com.torukobyte.bootcampproject.core.util.results.DataResult;
 import com.torukobyte.bootcampproject.core.util.results.Result;
@@ -40,6 +41,7 @@ public class EmployeeManager implements EmployeeService {
 
     @Override
     public DataResult<GetEmployeeResponse> getById(int id) {
+        checkIfEmployeeExistById(id);
         Employee employee = repository.findById(id).orElseThrow();
         GetEmployeeResponse data = mapper.forResponse().map(employee, GetEmployeeResponse.class);
 
@@ -48,6 +50,7 @@ public class EmployeeManager implements EmployeeService {
 
     @Override
     public DataResult<CreateEmployeeResponse> add(CreateEmployeeRequest request) {
+        checkIfEmployeeExistByNationalIdentity(request.getNationalIdentity());
         Employee employee = mapper.forRequest().map(request, Employee.class);
         repository.save(employee);
         CreateEmployeeResponse data = mapper.forResponse().map(employee, CreateEmployeeResponse.class);
@@ -57,6 +60,8 @@ public class EmployeeManager implements EmployeeService {
 
     @Override
     public DataResult<UpdateEmployeeResponse> update(UpdateEmployeeRequest request, int id) {
+        checkIfEmployeeExistById(id);
+        checkIfEmployeeExistByNationalIdentity(request.getNationalIdentity());
         Employee employee = mapper.forRequest().map(request, Employee.class);
         employee.setId(id);
         repository.save(employee);
@@ -67,7 +72,20 @@ public class EmployeeManager implements EmployeeService {
 
     @Override
     public Result delete(int id) {
+        checkIfEmployeeExistById(id);
         repository.deleteById(id);
         return new SuccessResult(Messages.Employee.Deleted);
+    }
+
+    private void checkIfEmployeeExistById(int id) {
+        if (!repository.existsById(id)) {
+            throw new BusinessException(Messages.Employee.EmployeeNotExists);
+        }
+    }
+
+    private void checkIfEmployeeExistByNationalIdentity(String nationalIdentity) {
+        if (repository.existsEmployeetByNationalIdentity(nationalIdentity)) {
+            throw new BusinessException(Messages.Employee.EmployeeExists);
+        }
     }
 }

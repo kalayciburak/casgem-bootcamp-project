@@ -9,6 +9,7 @@ import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.Cr
 import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.GetAllApplicantResponse;
 import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.GetApplicantResponse;
 import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.UpdateApplicantResponse;
+import com.torukobyte.bootcampproject.core.util.exceptions.BusinessException;
 import com.torukobyte.bootcampproject.core.util.mapping.ModelMapperService;
 import com.torukobyte.bootcampproject.core.util.results.*;
 import com.torukobyte.bootcampproject.entities.users.Applicant;
@@ -39,6 +40,7 @@ public class ApplicantManager implements ApplicantService {
 
     @Override
     public DataResult<GetApplicantResponse> getById(int id) {
+        checkIfApplicantExistById(id);
         Applicant appliicant = repository.findById(id).orElse(null);
         GetApplicantResponse data = mapper.forResponse().map(appliicant, GetApplicantResponse.class);
 
@@ -47,6 +49,7 @@ public class ApplicantManager implements ApplicantService {
 
     @Override
     public DataResult<CreateApplicantResponse> add(CreateApplicantRequest request) {
+        checkIfApplicantExistByNationalIdentity(request.getNationalIdentity());
         Applicant appliicant = mapper.forRequest().map(request, Applicant.class);
         repository.save(appliicant);
         CreateApplicantResponse data = mapper.forResponse().map(appliicant, CreateApplicantResponse.class);
@@ -56,6 +59,8 @@ public class ApplicantManager implements ApplicantService {
 
     @Override
     public DataResult<UpdateApplicantResponse> update(UpdateApplicantRequest request, int id) {
+        checkIfApplicantExistById(id);
+        checkIfApplicantExistByNationalIdentity(request.getNationalIdentity());
         Applicant applicant = mapper.forRequest().map(request, Applicant.class);
         applicant.setId(id);
         repository.save(applicant);
@@ -66,6 +71,7 @@ public class ApplicantManager implements ApplicantService {
 
     @Override
     public Result delete(int id) {
+        checkIfApplicantExistById(id);
         repository.deleteById(id);
         return new SuccessResult(Messages.Applicant.Deleted);
     }
@@ -76,7 +82,6 @@ public class ApplicantManager implements ApplicantService {
             if (repository.findById(id).isPresent()) {
                 return new ErrorDataResult<>(null, Messages.Applicant.AlreadyApplicant);
             }
-
             Applicant applicant = mapper.forResponse().map(employeeService.getById(id).getData(), Applicant.class);
             applicant.setAbout(about);
             repository.beAnApplicant(about, id);
@@ -99,6 +104,18 @@ public class ApplicantManager implements ApplicantService {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return new ErrorResult(Messages.User.NotFound);
+        }
+    }
+
+    private void checkIfApplicantExistById(int id) {
+        if (!repository.existsById(id)) {
+            throw new BusinessException(Messages.Applicant.ApplicantNotExists);
+        }
+    }
+
+    private void checkIfApplicantExistByNationalIdentity(String nationalIdentity) {
+        if (repository.existsApplicantByNationalIdentity(nationalIdentity)) {
+            throw new BusinessException(Messages.Applicant.ApplicantExists);
         }
     }
 }

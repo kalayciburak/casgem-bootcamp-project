@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,6 +14,8 @@ import lombok.Setter;
 public class GetAllUserResponse {
     private int id;
     private String firstName;
+    private LocalDate dateOfBirth;
+    private String nationalIdentity;
     private String lastName;
     private String email;
 }

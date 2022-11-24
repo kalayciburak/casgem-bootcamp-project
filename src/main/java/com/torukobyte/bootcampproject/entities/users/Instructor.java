@@ -1,13 +1,13 @@
 package com.torukobyte.bootcampproject.entities.users;
 
+import com.torukobyte.bootcampproject.entities.Bootcamp;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,4 +18,6 @@ import javax.persistence.Table;
 public class Instructor extends User {
     @Column(name = "company_name")
     private String companyName;
+    @OneToMany(mappedBy = "instructor")
+    private List<Bootcamp> bootcamps;
 }

@@ -8,6 +8,7 @@ import com.torukobyte.bootcampproject.business.dto.responses.users.instructors.C
 import com.torukobyte.bootcampproject.business.dto.responses.users.instructors.GetAllInstructorResponse;
 import com.torukobyte.bootcampproject.business.dto.responses.users.instructors.GetInstructorResponse;
 import com.torukobyte.bootcampproject.business.dto.responses.users.instructors.UpdateInstructorResponse;
+import com.torukobyte.bootcampproject.core.util.exceptions.BusinessException;
 import com.torukobyte.bootcampproject.core.util.mapping.ModelMapperService;
 import com.torukobyte.bootcampproject.core.util.results.DataResult;
 import com.torukobyte.bootcampproject.core.util.results.Result;
@@ -39,6 +40,7 @@ public class InstructorManager implements InstructorService {
 
     @Override
     public DataResult<GetInstructorResponse> getById(int id) {
+        checkIfInstructorExistById(id);
         Instructor instructor = repository.findById(id).orElseThrow();
         GetInstructorResponse data = mapper.forResponse().map(instructor, GetInstructorResponse.class);
 
@@ -47,6 +49,7 @@ public class InstructorManager implements InstructorService {
 
     @Override
     public DataResult<CreateInstructorResponse> add(CreateInstructorRequest request) {
+        checkIfInstructorExistByNationalIdentity(request.getNationalIdentity());
         Instructor instructor = mapper.forRequest().map(request, Instructor.class);
         repository.save(instructor);
         CreateInstructorResponse data = mapper.forResponse().map(instructor, CreateInstructorResponse.class);
@@ -56,6 +59,8 @@ public class InstructorManager implements InstructorService {
 
     @Override
     public DataResult<UpdateInstructorResponse> update(UpdateInstructorRequest request, int id) {
+        checkIfInstructorExistById(id);
+        checkIfInstructorExistByNationalIdentity(request.getNationalIdentity());
         Instructor instructor = mapper.forRequest().map(request, Instructor.class);
         instructor.setId(id);
         repository.save(instructor);
@@ -66,7 +71,20 @@ public class InstructorManager implements InstructorService {
 
     @Override
     public Result delete(int id) {
+        checkIfInstructorExistById(id);
         repository.deleteById(id);
         return new SuccessResult(Messages.Instructor.Deleted);
+    }
+
+    private void checkIfInstructorExistById(int id) {
+        if (!repository.existsById(id)) {
+            throw new BusinessException(Messages.Instructor.InstructorNotExists);
+        }
+    }
+
+    private void checkIfInstructorExistByNationalIdentity(String nationalIdentity) {
+        if (repository.existsInstructortByNationalIdentity(nationalIdentity)) {
+            throw new BusinessException(Messages.Instructor.InstructorExists);
+        }
     }
 }

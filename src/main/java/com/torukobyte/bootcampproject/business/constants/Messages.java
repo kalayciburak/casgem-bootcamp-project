@@ -15,6 +15,8 @@ public class Messages {
         public static String AlreadyApplicant = "Employee already became an Applicant!";
         public static String BecameEmployee = "Applicant became employee.";
         public static String NotFound = "Applicant not found.";
+        public static final String ApplicantExists = "Applicant already exists.";
+        public static String ApplicantNotExists = "Applicant not exists.";
     }
 
     public static class Employee {
@@ -24,6 +26,8 @@ public class Messages {
         public static final String Listed = "Employees listed.";
         public static final String ListedById = "Employee listed by id.";
         public static String NotFound = "Employee not found.";
+        public static final String EmployeeExists = "Employee already exists.";
+        public static String EmployeeNotExists = "Employee not exists.";
     }
 
     public static class Instructor {
@@ -33,5 +37,7 @@ public class Messages {
         public static final String Listed = "Instructors listed.";
         public static final String ListedById = "Instructor listed by id.";
         public static String NotFound = "Instructor not found.";
+        public static final String InstructorExists = "Instructor already exists.";
+        public static String InstructorNotExists = "Instructor not exists.";
     }
 }
