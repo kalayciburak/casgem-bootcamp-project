@@ -97,7 +97,7 @@ public class ApplicantManager implements ApplicantService {
     public Result removeAnApplicant(int id) {
         try {
             if (repository.findById(id).isEmpty()) {
-                return new ErrorResult(Messages.Applicant.NotFound);
+                return new ErrorResult(Messages.Applicant.ApplicantNotExists);
             }
             repository.removeAnApplicant(id);
             return new SuccessResult(Messages.Applicant.Deleted);
