@@ -73,6 +73,7 @@ public class InstructorManager implements InstructorService {
     public Result delete(int id) {
         checkIfInstructorExistById(id);
         repository.deleteById(id);
+
         return new SuccessResult(Messages.Instructor.Deleted);
     }
 

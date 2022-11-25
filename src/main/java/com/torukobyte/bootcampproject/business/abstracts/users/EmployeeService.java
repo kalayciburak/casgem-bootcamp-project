@@ -17,4 +17,5 @@ public interface EmployeeService {
     DataResult<CreateEmployeeResponse> add(CreateEmployeeRequest request);
     DataResult<UpdateEmployeeResponse> update(UpdateEmployeeRequest request, int id);
     Result delete(int id);
+    void checkIfUserIsEmployee(int id);
 }

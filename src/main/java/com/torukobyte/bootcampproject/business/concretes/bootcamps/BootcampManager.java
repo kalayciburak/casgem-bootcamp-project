@@ -73,6 +73,7 @@ public class BootcampManager implements BootcampService {
     public Result delete(int id) {
         checkIfBootcampExistById(id);
         repository.deleteById(id);
+
         return new SuccessResult(Messages.Bootcamp.Deleted);
     }
 

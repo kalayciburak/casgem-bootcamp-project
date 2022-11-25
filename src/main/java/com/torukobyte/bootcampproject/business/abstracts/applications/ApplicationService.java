@@ -17,4 +17,5 @@ public interface ApplicationService {
     DataResult<CreateApplicationResponse> add(CreateApplicationRequest request);
     DataResult<UpdateApplicationResponse> update(UpdateApplicationRequest request, int id);
     Result delete(int id);
+    Result findApplicationAndDeleteFromApplication(int applicantId);
 }

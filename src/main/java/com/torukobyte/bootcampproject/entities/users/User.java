@@ -1,17 +1,12 @@
 package com.torukobyte.bootcampproject.entities.users;
 
-import com.torukobyte.bootcampproject.entities.applications.Application;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter

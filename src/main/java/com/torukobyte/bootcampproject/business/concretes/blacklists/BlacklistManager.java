@@ -1,6 +1,8 @@
 package com.torukobyte.bootcampproject.business.concretes.blacklists;
 
+import com.torukobyte.bootcampproject.business.abstracts.applications.ApplicationService;
 import com.torukobyte.bootcampproject.business.abstracts.blacklists.BlacklistService;
+import com.torukobyte.bootcampproject.business.abstracts.users.ApplicantService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
 import com.torukobyte.bootcampproject.business.dto.requests.blacklists.CreateBlacklistRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.blacklists.UpdateBlacklistRequest;
@@ -16,16 +18,28 @@ import com.torukobyte.bootcampproject.core.util.results.SuccessDataResult;
 import com.torukobyte.bootcampproject.core.util.results.SuccessResult;
 import com.torukobyte.bootcampproject.entities.blacklists.Blacklist;
 import com.torukobyte.bootcampproject.repository.abstracts.blacklists.BlacklistRepository;
-import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class BlacklistManager implements BlacklistService {
     private final BlacklistRepository repository;
-    private ModelMapperService mapper;
+    private final ModelMapperService mapper;
+    private final ApplicantService applicantService;
+    private final ApplicationService applicationService;
+
+    public BlacklistManager(
+            BlacklistRepository repository,
+            ModelMapperService mapper,
+            ApplicantService applicantService,
+            @Lazy ApplicationService applicationService) {
+        this.repository = repository;
+        this.mapper = mapper;
+        this.applicantService = applicantService;
+        this.applicationService = applicationService;
+    }
 
     @Override
     public DataResult<List<GetAllBlacklistResponse>> getAll() {
@@ -40,6 +54,7 @@ public class BlacklistManager implements BlacklistService {
 
     @Override
     public DataResult<GetBlacklistResponse> getById(int id) {
+        checkIfBlacklistExistById(id);
         Blacklist blacklist = repository.findById(id).orElseThrow();
         GetBlacklistResponse data = mapper.forResponse().map(blacklist, GetBlacklistResponse.class);
 
@@ -48,16 +63,21 @@ public class BlacklistManager implements BlacklistService {
 
     @Override
     public DataResult<CreateBlacklistResponse> add(CreateBlacklistRequest request) {
+        applicantService.checkIfUserIsApplicant(request.getApplicantId());
+        checkIfApplicantInBlacklist(request.getApplicantId());
         Blacklist blacklist = mapper.forRequest().map(request, Blacklist.class);
         blacklist.setId(0);
         repository.save(blacklist);
+        Result result = applicationService.findApplicationAndDeleteFromApplication(request.getApplicantId());
         CreateBlacklistResponse data = mapper.forResponse().map(blacklist, CreateBlacklistResponse.class);
+        String message = Messages.Blacklist.Created + result.getMessage();
 
-        return new SuccessDataResult<>(data, Messages.Blacklist.Created);
+        return new SuccessDataResult<>(data, message);
     }
 
     @Override
     public DataResult<UpdateBlacklistResponse> update(UpdateBlacklistRequest request, int id) {
+        checkIfBlacklistExistById(id);
         Blacklist blacklist = mapper.forRequest().map(request, Blacklist.class);
         blacklist.setId(id);
         repository.save(blacklist);
@@ -68,6 +88,7 @@ public class BlacklistManager implements BlacklistService {
 
     @Override
     public Result delete(int id) {
+        checkIfBlacklistExistById(id);
         repository.deleteById(id);
 
         return new SuccessResult(Messages.Blacklist.Deleted);
@@ -79,9 +100,9 @@ public class BlacklistManager implements BlacklistService {
         }
     }
 
-    public void checkIfApplicantInBlacklist(int applicantId){
-        if(repository.findById(applicantId).isPresent()){ // TODO: fix
-            throw new RuntimeException(Messages.Blacklist.ApplicantInBlacklist);
+    public void checkIfApplicantInBlacklist(int id) {
+        if (repository.existsBlacklistByApplicantId(id)) {
+            throw new BusinessException(Messages.Blacklist.ApplicantInBlacklist);
         }
     }
 }

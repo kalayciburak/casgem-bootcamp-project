@@ -16,7 +16,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Table(name = "blacklists")
 public class Blacklist {
-    // TODO: sadece adaylar dahil edilebilir ve bu listede olan adaylar başvuruda bulunamaz
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -11,7 +11,10 @@ import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.Ge
 import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.UpdateApplicantResponse;
 import com.torukobyte.bootcampproject.core.util.exceptions.BusinessException;
 import com.torukobyte.bootcampproject.core.util.mapping.ModelMapperService;
-import com.torukobyte.bootcampproject.core.util.results.*;
+import com.torukobyte.bootcampproject.core.util.results.DataResult;
+import com.torukobyte.bootcampproject.core.util.results.Result;
+import com.torukobyte.bootcampproject.core.util.results.SuccessDataResult;
+import com.torukobyte.bootcampproject.core.util.results.SuccessResult;
 import com.torukobyte.bootcampproject.entities.users.Applicant;
 import com.torukobyte.bootcampproject.repository.abstracts.users.ApplicantRepository;
 import lombok.AllArgsConstructor;
@@ -72,37 +75,35 @@ public class ApplicantManager implements ApplicantService {
     public Result delete(int id) {
         checkIfApplicantExistById(id);
         repository.deleteById(id);
+
         return new SuccessResult(Messages.Applicant.Deleted);
     }
 
     @Override
     public DataResult<GetApplicantResponse> beAnApplicant(String about, int id) {
-        try {
-            if (repository.findById(id).isPresent()) {
-                return new ErrorDataResult<>(null, Messages.Applicant.AlreadyApplicant);
-            }
-            Applicant applicant = mapper.forResponse().map(employeeService.getById(id).getData(), Applicant.class);
-            applicant.setAbout(about);
-            repository.beAnApplicant(about, id);
-            GetApplicantResponse data = mapper.forResponse().map(applicant, GetApplicantResponse.class);
+        checkIfApplicantExistById(id);
+        checkIfAlreadyAnApplicant(id);
+        Applicant applicant = mapper.forResponse().map(employeeService.getById(id).getData(), Applicant.class);
+        applicant.setAbout(about);
+        repository.beAnApplicant(about, id);
+        GetApplicantResponse data = mapper.forResponse().map(applicant, GetApplicantResponse.class);
 
-            return new SuccessDataResult<>(data, Messages.Applicant.BecameEmployee);
-        } catch (Exception e) {
-            return new ErrorDataResult<>(null, Messages.User.NotFound);
-        }
+        return new SuccessDataResult<>(data, Messages.Applicant.BecameApplicant);
     }
 
+    // TODO: will be fixed foreing key constraint error
     @Override
     public Result removeAnApplicant(int id) {
-        try {
-            if (repository.findById(id).isEmpty()) {
-                return new ErrorResult(Messages.Applicant.ApplicantNotExists);
-            }
-            repository.removeAnApplicant(id);
-            return new SuccessResult(Messages.Applicant.Deleted);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return new ErrorResult(Messages.User.NotFound);
+        checkIfApplicantExistById(id);
+        employeeService.checkIfUserIsEmployee(id);
+        repository.removeAnApplicant(id);
+
+        return new SuccessResult(Messages.Applicant.Deleted);
+    }
+
+    private void checkIfAlreadyAnApplicant(int id) {
+        if (repository.findById(id).isPresent()) {
+            throw new BusinessException(Messages.Applicant.AlreadyApplicant);
         }
     }
 
@@ -119,7 +120,7 @@ public class ApplicantManager implements ApplicantService {
     }
 
     public void checkIfUserIsApplicant(int applicantId) {
-        if(!repository.existsById(applicantId)) {
+        if (!repository.existsById(applicantId)) {
             throw new BusinessException(Messages.Applicant.NotAnApplicantMessages);
         }
     }

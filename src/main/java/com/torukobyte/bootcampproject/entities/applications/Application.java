@@ -22,7 +22,7 @@ public class Application {
     private int id;
     @Column(name = "state")
     private int state;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne()
     @JoinColumn(name = "applicant_id")
     private Applicant applicant;
     @ManyToOne()

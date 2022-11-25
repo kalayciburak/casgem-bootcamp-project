@@ -73,6 +73,7 @@ public class EmployeeManager implements EmployeeService {
     public Result delete(int id) {
         checkIfEmployeeExistById(id);
         repository.deleteById(id);
+
         return new SuccessResult(Messages.Employee.Deleted);
     }
 
@@ -85,6 +86,12 @@ public class EmployeeManager implements EmployeeService {
     private void checkIfEmployeeExistByNationalIdentity(String nationalIdentity) {
         if (repository.existsEmployeetByNationalIdentity(nationalIdentity)) {
             throw new BusinessException(Messages.Employee.EmployeeExists);
+        }
+    }
+
+    public void checkIfUserIsEmployee(int id){
+        if (!repository.existsById(id)) {
+            throw new BusinessException(Messages.Employee.NotAnEmployee);
         }
     }
 }

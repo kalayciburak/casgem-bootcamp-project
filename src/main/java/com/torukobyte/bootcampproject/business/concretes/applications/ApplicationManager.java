@@ -18,6 +18,7 @@ import com.torukobyte.bootcampproject.core.util.results.Result;
 import com.torukobyte.bootcampproject.core.util.results.SuccessDataResult;
 import com.torukobyte.bootcampproject.core.util.results.SuccessResult;
 import com.torukobyte.bootcampproject.entities.applications.Application;
+import com.torukobyte.bootcampproject.entities.bootcamps.Bootcamp;
 import com.torukobyte.bootcampproject.repository.abstracts.applications.ApplicationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,10 +29,10 @@ import java.util.List;
 @AllArgsConstructor
 public class ApplicationManager implements ApplicationService {
     private final ApplicationRepository repository;
-    private BootcampService bootcampService;
-    private ApplicantService applicantService;
-    private BlacklistService blacklistService;
-    private ModelMapperService mapper;
+    private final BootcampService bootcampService;
+    private final ApplicantService applicantService;
+    private final BlacklistService blacklistService;
+    private final ModelMapperService mapper;
 
     @Override
     public DataResult<List<GetAllApplicationResponse>> getAll() {
@@ -82,6 +83,7 @@ public class ApplicationManager implements ApplicationService {
     public Result delete(int id) {
         checkIfApplicationExistById(id);
         repository.deleteById(id);
+
         return new SuccessResult(Messages.Application.Deleted);
     }
 
@@ -95,5 +97,16 @@ public class ApplicationManager implements ApplicationService {
         if (repository.existsApplicationsByApplicantId(userId)) {
             throw new BusinessException(Messages.Application.UserHasApplication);
         }
+    }
+
+    public Result findApplicationAndDeleteFromApplication(int applicantId) {
+        Application application = repository.findApplicationByApplicantId(applicantId);
+        if (repository.existsApplicationsByApplicantId(applicantId)) {
+            repository.deleteById(application.getId());
+
+            return new SuccessResult(Messages.Blacklist.RemovedFromApplication);
+        }
+
+        return new SuccessResult(Messages.Blacklist.Blank);
     }
 }
