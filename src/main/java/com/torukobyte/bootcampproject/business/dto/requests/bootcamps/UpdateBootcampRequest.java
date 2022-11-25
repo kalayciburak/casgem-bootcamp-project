@@ -1,4 +1,4 @@
-package com.torukobyte.bootcampproject.business.dto.requests;
+package com.torukobyte.bootcampproject.business.dto.requests.bootcamps;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateBootcampRequest {
+public class UpdateBootcampRequest {
     private int instructorId;
     private String name;
     private int state;

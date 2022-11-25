@@ -1,4 +1,4 @@
-package com.torukobyte.bootcampproject.entities;
+package com.torukobyte.bootcampproject.entities.bootcamps;
 
 import com.torukobyte.bootcampproject.entities.applications.Application;
 import com.torukobyte.bootcampproject.entities.users.Instructor;

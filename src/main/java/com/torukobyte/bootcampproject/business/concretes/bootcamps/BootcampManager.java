@@ -1,21 +1,21 @@
-package com.torukobyte.bootcampproject.business.concretes;
+package com.torukobyte.bootcampproject.business.concretes.bootcamps;
 
-import com.torukobyte.bootcampproject.business.abstracts.BootcampService;
+import com.torukobyte.bootcampproject.business.abstracts.bootcamps.BootcampService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
-import com.torukobyte.bootcampproject.business.dto.requests.CreateBootcampRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.UpdateBootcampRequest;
-import com.torukobyte.bootcampproject.business.dto.responses.CreateBootcampResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.GetAllBootcampResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.GetBootcampResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.UpdateBootcampResponse;
+import com.torukobyte.bootcampproject.business.dto.requests.bootcamps.CreateBootcampRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.bootcamps.UpdateBootcampRequest;
+import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.CreateBootcampResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.GetAllBootcampResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.GetBootcampResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.UpdateBootcampResponse;
 import com.torukobyte.bootcampproject.core.util.exceptions.BusinessException;
 import com.torukobyte.bootcampproject.core.util.mapping.ModelMapperService;
 import com.torukobyte.bootcampproject.core.util.results.DataResult;
 import com.torukobyte.bootcampproject.core.util.results.Result;
 import com.torukobyte.bootcampproject.core.util.results.SuccessDataResult;
 import com.torukobyte.bootcampproject.core.util.results.SuccessResult;
-import com.torukobyte.bootcampproject.entities.Bootcamp;
-import com.torukobyte.bootcampproject.repository.abstracts.BootcampRepository;
+import com.torukobyte.bootcampproject.entities.bootcamps.Bootcamp;
+import com.torukobyte.bootcampproject.repository.abstracts.bootcamps.BootcampRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +29,7 @@ public class BootcampManager implements BootcampService {
 
     @Override
     public DataResult<List<GetAllBootcampResponse>> getAll() {
+
         List<Bootcamp> bootcamps = repository.findAll();
         List<GetAllBootcampResponse> data = bootcamps
                 .stream()
@@ -44,7 +45,7 @@ public class BootcampManager implements BootcampService {
         Bootcamp bootcamp = repository.findById(id).orElseThrow();
         GetBootcampResponse data = mapper.forResponse().map(bootcamp, GetBootcampResponse.class);
 
-        return new SuccessDataResult<>(data, Messages.Bootcamp.ListedById);
+        return new SuccessDataResult<>(data, Messages.Bootcamp.ListById);
     }
 
     @Override
@@ -82,9 +83,10 @@ public class BootcampManager implements BootcampService {
     }
 
     @Override
-    public void checkIfBootcampIsActive(int id){
+    public void checkIfBootcampIsActive(int id) {
+        checkIfBootcampExistById(id);
         Bootcamp bootcamp = repository.findById(id).orElseThrow();
-        if(bootcamp.getState() == 2){
+        if (bootcamp.getState() == 2) {
             throw new BusinessException(Messages.Bootcamp.BootcampIsNotActive);
         }
     }

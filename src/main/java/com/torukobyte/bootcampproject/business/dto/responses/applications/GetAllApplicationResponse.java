@@ -12,7 +12,7 @@ import lombok.Setter;
 public class GetAllApplicationResponse {
     private int id;
     private int bootcampId;
-    private int userId;
+    private int applicantId;
     private int state;
     private String bootcampName;
     private String userFirstName;

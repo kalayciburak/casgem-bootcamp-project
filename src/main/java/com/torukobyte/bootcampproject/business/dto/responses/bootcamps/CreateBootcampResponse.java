@@ -1,4 +1,4 @@
-package com.torukobyte.bootcampproject.business.dto.responses;
+package com.torukobyte.bootcampproject.business.dto.responses.bootcamps;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

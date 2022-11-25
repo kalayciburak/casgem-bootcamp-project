@@ -1,6 +1,6 @@
 package com.torukobyte.bootcampproject.entities.users;
 
-import com.torukobyte.bootcampproject.entities.Bootcamp;
+import com.torukobyte.bootcampproject.entities.bootcamps.Bootcamp;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,5 +22,5 @@ public class Instructor extends User {
     @Column(name = "company_name")
     private String companyName;
     @OneToMany(mappedBy = "instructor")
-    private List<Bootcamp> bootcamp;
+    private List<Bootcamp> bootcamps;
 }

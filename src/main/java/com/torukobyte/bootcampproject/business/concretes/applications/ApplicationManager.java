@@ -1,7 +1,9 @@
 package com.torukobyte.bootcampproject.business.concretes.applications;
 
-import com.torukobyte.bootcampproject.business.abstracts.BootcampService;
 import com.torukobyte.bootcampproject.business.abstracts.applications.ApplicationService;
+import com.torukobyte.bootcampproject.business.abstracts.blacklists.BlacklistService;
+import com.torukobyte.bootcampproject.business.abstracts.bootcamps.BootcampService;
+import com.torukobyte.bootcampproject.business.abstracts.users.ApplicantService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
 import com.torukobyte.bootcampproject.business.dto.requests.applications.CreateApplicationRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.applications.UpdateApplicationRequest;
@@ -27,6 +29,8 @@ import java.util.List;
 public class ApplicationManager implements ApplicationService {
     private final ApplicationRepository repository;
     private BootcampService bootcampService;
+    private ApplicantService applicantService;
+    private BlacklistService blacklistService;
     private ModelMapperService mapper;
 
     @Override
@@ -46,12 +50,14 @@ public class ApplicationManager implements ApplicationService {
         Application application = repository.getById(id);
         GetApplicationResponse data = mapper.forResponse().map(application, GetApplicationResponse.class);
 
-        return new SuccessDataResult<>(data, Messages.Application.ListedById);
+        return new SuccessDataResult<>(data, Messages.Application.ListById);
     }
 
     @Override
     public DataResult<CreateApplicationResponse> add(CreateApplicationRequest request) {
-        checkIfUserHasApplication(request.getUserId());
+        blacklistService.checkIfApplicantInBlacklist(request.getApplicantId());
+        applicantService.checkIfUserIsApplicant(request.getApplicantId());
+        checkIfUserHasApplication(request.getApplicantId());
         bootcampService.checkIfBootcampIsActive(request.getBootcampId());
         Application application = mapper.forRequest().map(request, Application.class);
         application.setId(0);
@@ -86,7 +92,7 @@ public class ApplicationManager implements ApplicationService {
     }
 
     public void checkIfUserHasApplication(int userId) {
-        if(repository.existsApplicationsByUserId(userId)) {
+        if (repository.existsApplicationsByApplicantId(userId)) {
             throw new BusinessException(Messages.Application.UserHasApplication);
         }
     }

@@ -1,19 +1,20 @@
-package com.torukobyte.bootcampproject.api.controllers;
+package com.torukobyte.bootcampproject.api.controllers.bootcamps;
 
-import com.torukobyte.bootcampproject.business.abstracts.BootcampService;
+import com.torukobyte.bootcampproject.business.abstracts.bootcamps.BootcampService;
 import com.torukobyte.bootcampproject.business.constants.Paths;
-import com.torukobyte.bootcampproject.business.dto.requests.CreateBootcampRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.UpdateBootcampRequest;
-import com.torukobyte.bootcampproject.business.dto.responses.CreateBootcampResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.GetAllBootcampResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.GetBootcampResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.UpdateBootcampResponse;
+import com.torukobyte.bootcampproject.business.dto.requests.bootcamps.CreateBootcampRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.bootcamps.UpdateBootcampRequest;
+import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.CreateBootcampResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.GetAllBootcampResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.GetBootcampResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.UpdateBootcampResponse;
 import com.torukobyte.bootcampproject.core.util.results.DataResult;
 import com.torukobyte.bootcampproject.core.util.results.Result;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -30,7 +31,7 @@ public class BootcampsController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    DataResult<CreateBootcampResponse> add(@RequestBody CreateBootcampRequest request) {
+    DataResult<CreateBootcampResponse> add(@Valid @RequestBody CreateBootcampRequest request) {
         return service.add(request);
     }
 

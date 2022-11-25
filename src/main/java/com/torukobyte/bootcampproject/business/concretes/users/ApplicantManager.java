@@ -1,6 +1,5 @@
 package com.torukobyte.bootcampproject.business.concretes.users;
 
-import com.torukobyte.bootcampproject.business.abstracts.BootcampService;
 import com.torukobyte.bootcampproject.business.abstracts.users.ApplicantService;
 import com.torukobyte.bootcampproject.business.abstracts.users.EmployeeService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
@@ -44,7 +43,7 @@ public class ApplicantManager implements ApplicantService {
         Applicant appliicant = repository.findById(id).orElse(null);
         GetApplicantResponse data = mapper.forResponse().map(appliicant, GetApplicantResponse.class);
 
-        return new SuccessDataResult<>(data, Messages.Applicant.ListedById);
+        return new SuccessDataResult<>(data, Messages.Applicant.ListById);
     }
 
     @Override
@@ -116,6 +115,12 @@ public class ApplicantManager implements ApplicantService {
     private void checkIfApplicantExistByNationalIdentity(String nationalIdentity) {
         if (repository.existsApplicantByNationalIdentity(nationalIdentity)) {
             throw new BusinessException(Messages.Applicant.ApplicantExists);
+        }
+    }
+
+    public void checkIfUserIsApplicant(int applicantId) {
+        if(!repository.existsById(applicantId)) {
+            throw new BusinessException(Messages.Applicant.NotAnApplicantMessages);
         }
     }
 }

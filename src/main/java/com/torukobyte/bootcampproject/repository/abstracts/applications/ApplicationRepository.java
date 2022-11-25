@@ -4,5 +4,5 @@ import com.torukobyte.bootcampproject.entities.applications.Application;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
-    boolean existsApplicationsByUserId(int userId);
+    boolean existsApplicationsByApplicantId(int userId);
 }

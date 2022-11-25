@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +37,4 @@ public class User {
     private String email;
     @Column(name = "password")
     private String password;
-    @OneToMany(mappedBy = "user")
-    private List<Application> applications;
 }

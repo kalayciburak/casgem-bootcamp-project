@@ -44,7 +44,7 @@ public class EmployeeManager implements EmployeeService {
         Employee employee = repository.findById(id).orElseThrow();
         GetEmployeeResponse data = mapper.forResponse().map(employee, GetEmployeeResponse.class);
 
-        return new SuccessDataResult<>(data, Messages.Employee.ListedById);
+        return new SuccessDataResult<>(data, Messages.Employee.ListById);
     }
 
     @Override

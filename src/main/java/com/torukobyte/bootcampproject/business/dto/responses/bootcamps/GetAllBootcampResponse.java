@@ -1,4 +1,4 @@
-package com.torukobyte.bootcampproject.business.dto.responses;
+package com.torukobyte.bootcampproject.business.dto.responses.bootcamps;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,11 +11,13 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateBootcampResponse {
+public class GetAllBootcampResponse {
     private int id;
     private int instructorId;
     private String name;
     private int state;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String instructorFirstName;
+    private String instructorLastName;
 }

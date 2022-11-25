@@ -19,4 +19,5 @@ public interface ApplicantService {
     Result delete(int id);
     DataResult<GetApplicantResponse> beAnApplicant(String about, int id);
     Result removeAnApplicant(int id);
+    void checkIfUserIsApplicant(int applicantId);
 }

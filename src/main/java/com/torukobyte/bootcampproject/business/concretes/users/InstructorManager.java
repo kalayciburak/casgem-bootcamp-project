@@ -44,7 +44,7 @@ public class InstructorManager implements InstructorService {
         Instructor instructor = repository.findById(id).orElseThrow();
         GetInstructorResponse data = mapper.forResponse().map(instructor, GetInstructorResponse.class);
 
-        return new SuccessDataResult<>(data, Messages.Instructor.ListedById);
+        return new SuccessDataResult<>(data, Messages.Instructor.ListById);
     }
 
     @Override
