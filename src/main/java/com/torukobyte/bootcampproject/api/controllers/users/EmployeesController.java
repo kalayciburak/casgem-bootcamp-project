@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -30,7 +31,7 @@ public class EmployeesController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    DataResult<CreateEmployeeResponse> add(@RequestBody CreateEmployeeRequest request) {
+    DataResult<CreateEmployeeResponse> add(@Valid @RequestBody CreateEmployeeRequest request) {
         return service.add(request);
     }
 
@@ -40,7 +41,7 @@ public class EmployeesController {
     }
 
     @PutMapping("/{id}")
-    DataResult<UpdateEmployeeResponse> update(@RequestBody UpdateEmployeeRequest request, @PathVariable int id) {
+    DataResult<UpdateEmployeeResponse> update(@Valid @RequestBody UpdateEmployeeRequest request, @PathVariable int id) {
         return service.update(request, id);
     }
 

@@ -41,7 +41,7 @@ public class BootcampsController {
     }
 
     @PutMapping("/{id}")
-    DataResult<UpdateBootcampResponse> update(@RequestBody UpdateBootcampRequest request, @PathVariable int id) {
+    DataResult<UpdateBootcampResponse> update(@Valid @RequestBody UpdateBootcampRequest request, @PathVariable int id) {
         return service.update(request, id);
     }
 

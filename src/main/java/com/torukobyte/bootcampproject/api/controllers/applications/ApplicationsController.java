@@ -41,7 +41,7 @@ public class ApplicationsController {
     }
 
     @PutMapping("/{id}")
-    DataResult<UpdateApplicationResponse> update(@RequestBody UpdateApplicationRequest request, @PathVariable int id) {
+    DataResult<UpdateApplicationResponse> update(@Valid @RequestBody UpdateApplicationRequest request, @PathVariable int id) {
         return service.update(request, id);
     }
 

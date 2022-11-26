@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -30,7 +31,7 @@ public class InstructorsController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    DataResult<CreateInstructorResponse> add(@RequestBody CreateInstructorRequest request) {
+    DataResult<CreateInstructorResponse> add(@Valid @RequestBody CreateInstructorRequest request) {
         return service.add(request);
     }
 
@@ -40,7 +41,7 @@ public class InstructorsController {
     }
 
     @PutMapping("/{id}")
-    DataResult<UpdateInstructorResponse> update(@RequestBody UpdateInstructorRequest request, @PathVariable int id) {
+    DataResult<UpdateInstructorResponse> update(@Valid @RequestBody UpdateInstructorRequest request, @PathVariable int id) {
         return service.update(request, id);
     }
 

@@ -82,6 +82,7 @@ public class ApplicantManager implements ApplicantService {
     @Override
     public DataResult<GetApplicantResponse> beAnApplicant(String about, int id) {
         checkIfAlreadyAnApplicant(id);
+        checkIfAboutValid(about);
         Applicant applicant = mapper.forResponse().map(employeeService.getById(id).getData(), Applicant.class);
         applicant.setAbout(about);
         repository.beAnApplicant(about, id);
@@ -90,7 +91,6 @@ public class ApplicantManager implements ApplicantService {
         return new SuccessDataResult<>(data, Messages.Applicant.BecameApplicant);
     }
 
-    // TODO: will be fixed foreing key constraint error
     @Override
     public Result removeAnApplicant(int id) {
         checkIfApplicantExistById(id);
@@ -124,5 +124,12 @@ public class ApplicantManager implements ApplicantService {
         if (!repository.existsById(applicantId)) {
             throw new BusinessException(Messages.Applicant.NotAnApplicantMessages);
         }
+    }
+
+    private void checkIfAboutValid(String about){
+        if(about.length() <= 5 || about.length() >= 50){
+            throw new BusinessException(Messages.Applicant.AboutValid);
+        }
+
     }
 }

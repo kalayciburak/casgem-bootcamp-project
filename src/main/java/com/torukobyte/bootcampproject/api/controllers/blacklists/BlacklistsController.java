@@ -41,7 +41,7 @@ public class BlacklistsController {
     }
 
     @PutMapping("/{id}")
-    DataResult<UpdateBlacklistResponse> update(@RequestBody UpdateBlacklistRequest request, @PathVariable int id) {
+    DataResult<UpdateBlacklistResponse> update(@Valid @RequestBody UpdateBlacklistRequest request, @PathVariable int id) {
         return service.update(request, id);
     }
 

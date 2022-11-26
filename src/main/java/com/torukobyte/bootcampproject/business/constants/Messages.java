@@ -17,6 +17,7 @@ public class Messages {
         public static final String ApplicantExists = "Applicant already exists.";
         public static final String ApplicantNotExists = "Applicant not exists.";
         public static final String NotAnApplicantMessages = "User is not an applicant.";
+        public static final String AboutValid = "About must be between 5 and 50 characters";
     }
 
     public static class Employee {

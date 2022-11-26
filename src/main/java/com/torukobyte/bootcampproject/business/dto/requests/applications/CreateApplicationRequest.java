@@ -1,5 +1,6 @@
 package com.torukobyte.bootcampproject.business.dto.requests.applications;
 
+import com.torukobyte.bootcampproject.business.constants.ValidationMessages;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +14,12 @@ import javax.validation.constraints.Min;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateApplicationRequest {
+    @Min(value = 1, message = ValidationMessages.Application.BootcampIdBlank)
     private int bootcampId;
+    @Min(value = 1, message = ValidationMessages.Application.ApplicantIdBlank)
     private int applicantId;
-    @Min(value = 1, message = "State cannot be less than 1")
-    @Max(value = 4, message = "State cannot be more than 4")
+    @Min(value = 1, message = ValidationMessages.Application.MinState)
+    @Max(value = 4, message = ValidationMessages.Application.MaxState)
     private int state;
 }
 
