@@ -21,5 +21,15 @@ public interface ApplicantRepository extends JpaRepository<Applicant, Integer> {
     @Transactional
     void removeAnApplicant(@Param("id") int id);
 
+    @Modifying
+    @Query(value = "delete from Applications where applicant_id = :id", nativeQuery = true)
+    @Transactional
+    void removeApplicantFromApplication(@Param("id") int id);
+
+    @Modifying
+    @Query(value = "delete from Blacklists where applicant_id = :id", nativeQuery = true)
+    @Transactional
+    void removeApplicantFromBlacklist(@Param("id") int id);
+
     boolean existsApplicantByNationalIdentity(String nationalIdentity);
 }

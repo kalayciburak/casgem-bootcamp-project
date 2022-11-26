@@ -21,6 +21,6 @@ public class Applicant extends User {
     private String about;
     @OneToMany(mappedBy = "applicant")
     private List<Application> applications;
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "applicant")
     private List<Blacklist> blacklists;
 }

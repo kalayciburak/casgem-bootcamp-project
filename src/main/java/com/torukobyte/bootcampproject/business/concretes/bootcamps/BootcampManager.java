@@ -84,9 +84,9 @@ public class BootcampManager implements BootcampService {
     }
 
     @Override
-    public void checkIfBootcampIsActive(int id) {
-        checkIfBootcampExistById(id);
-        Bootcamp bootcamp = repository.findById(id).orElseThrow();
+    public void checkIfBootcampIsActive(int bootcampId) {
+        checkIfBootcampExistById(bootcampId);
+        Bootcamp bootcamp = repository.findById(bootcampId).orElseThrow();
         if (bootcamp.getState() == 2) {
             throw new BusinessException(Messages.Bootcamp.BootcampIsNotActive);
         }

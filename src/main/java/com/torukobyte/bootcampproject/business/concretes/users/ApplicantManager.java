@@ -81,7 +81,6 @@ public class ApplicantManager implements ApplicantService {
 
     @Override
     public DataResult<GetApplicantResponse> beAnApplicant(String about, int id) {
-        checkIfApplicantExistById(id);
         checkIfAlreadyAnApplicant(id);
         Applicant applicant = mapper.forResponse().map(employeeService.getById(id).getData(), Applicant.class);
         applicant.setAbout(about);
@@ -96,6 +95,8 @@ public class ApplicantManager implements ApplicantService {
     public Result removeAnApplicant(int id) {
         checkIfApplicantExistById(id);
         employeeService.checkIfUserIsEmployee(id);
+        repository.removeApplicantFromApplication(id);
+        repository.removeApplicantFromBlacklist(id);
         repository.removeAnApplicant(id);
 
         return new SuccessResult(Messages.Applicant.Deleted);

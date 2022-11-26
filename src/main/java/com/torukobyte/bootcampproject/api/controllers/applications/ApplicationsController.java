@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -30,7 +31,7 @@ public class ApplicationsController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    DataResult<CreateApplicationResponse> add(@RequestBody CreateApplicationRequest request) {
+    DataResult<CreateApplicationResponse> add(@Valid @RequestBody CreateApplicationRequest request) {
         return service.add(request);
     }
 
