@@ -20,9 +20,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CreateUserRequest {
     @NotBlank(message = ValidationMessages.User.FirstNameBlank)
-    @Length(min = 3, max = 50, message = ValidationMessages.User.FirstNameValid)
+    @Length(min = 2, max = 50, message = ValidationMessages.User.FirstNameValid)
     private String firstName;
     @NotBlank(message = ValidationMessages.User.LastNameBlank)
+    @Length(min = 2, max = 50, message = ValidationMessages.User.LastNameValid)
     private String lastName;
     @NotNull(message = ValidationMessages.User.DateOfBirthBlank)
     private LocalDate dateOfBirth;

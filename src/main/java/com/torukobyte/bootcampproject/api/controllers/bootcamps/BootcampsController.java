@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @AllArgsConstructor
-@RequestMapping(Paths.api + "bootcamps")
+@RequestMapping(Paths.apiV1 + "bootcamps")
 public class BootcampsController {
     private BootcampService service;
 

@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @AllArgsConstructor
-@RequestMapping(Paths.api + "applicants")
+@RequestMapping(Paths.apiV1 + "applicants")
 public class ApplicantsController {
     private ApplicantService service;
 
@@ -29,7 +29,8 @@ public class ApplicantsController {
         return service.getAll();
     }
 
-    @PostMapping@Valid
+    @PostMapping
+    @Valid
     @ResponseStatus(HttpStatus.CREATED)
     DataResult<CreateApplicantResponse> add(@Valid @RequestBody CreateApplicantRequest request) {
         return service.add(request);
@@ -41,7 +42,9 @@ public class ApplicantsController {
     }
 
     @PutMapping("/{id}")
-    DataResult<UpdateApplicantResponse> update(@Valid @RequestBody UpdateApplicantRequest request, @PathVariable int id) {
+    DataResult<UpdateApplicantResponse> update(
+            @Valid @RequestBody UpdateApplicantRequest request,
+            @PathVariable int id) {
         return service.update(request, id);
     }
 

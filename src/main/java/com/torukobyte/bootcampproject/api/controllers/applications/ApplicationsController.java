@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @AllArgsConstructor
-@RequestMapping(Paths.api + "applications")
+@RequestMapping(Paths.apiV1 + "applications")
 public class ApplicationsController {
     private ApplicationService service;
 
@@ -41,7 +41,9 @@ public class ApplicationsController {
     }
 
     @PutMapping("/{id}")
-    DataResult<UpdateApplicationResponse> update(@Valid @RequestBody UpdateApplicationRequest request, @PathVariable int id) {
+    DataResult<UpdateApplicationResponse> update(
+            @Valid @RequestBody UpdateApplicationRequest request,
+            @PathVariable int id) {
         return service.update(request, id);
     }
 

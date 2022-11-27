@@ -1,5 +1,5 @@
 package com.torukobyte.bootcampproject.business.constants;
 
 public class Paths {
-    public static final String api = "/api/v1/";
+    public static final String apiV1 = "/api/v1/";
 }

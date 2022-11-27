@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateBootcampRequest {
-    @NotBlank(message = ValidationMessages.Bootcamp.InstructorIdBlank)
+    @Min(value = 1, message = ValidationMessages.Bootcamp.InstructorIdBlank)
     private int instructorId;
     @NotBlank(message = ValidationMessages.Bootcamp.NameBlank)
     @Length(min = 3, max = 50, message = ValidationMessages.Bootcamp.NameValid)

@@ -102,15 +102,16 @@ public class ApplicantManager implements ApplicantService {
         return new SuccessResult(Messages.Applicant.Deleted);
     }
 
-    private void checkIfAlreadyAnApplicant(int id) {
-        if (repository.findById(id).isPresent()) {
-            throw new BusinessException(Messages.Applicant.AlreadyApplicant);
+    @Override
+    public void checkIfApplicantExistById(int id) {
+        if (!repository.existsById(id)) {
+            throw new BusinessException(Messages.Applicant.ApplicantNotExists);
         }
     }
 
-    private void checkIfApplicantExistById(int id) {
-        if (!repository.existsById(id)) {
-            throw new BusinessException(Messages.Applicant.ApplicantNotExists);
+    private void checkIfAlreadyAnApplicant(int id) {
+        if (repository.findById(id).isPresent()) {
+            throw new BusinessException(Messages.Applicant.AlreadyApplicant);
         }
     }
 
@@ -120,16 +121,9 @@ public class ApplicantManager implements ApplicantService {
         }
     }
 
-    public void checkIfUserIsApplicant(int applicantId) {
-        if (!repository.existsById(applicantId)) {
-            throw new BusinessException(Messages.Applicant.NotAnApplicantMessages);
-        }
-    }
-
-    private void checkIfAboutValid(String about){
-        if(about.length() <= 5 || about.length() >= 50){
+    private void checkIfAboutValid(String about) {
+        if (about.length() <= 5 || about.length() >= 50) {
             throw new BusinessException(Messages.Applicant.AboutValid);
         }
-
     }
 }

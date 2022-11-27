@@ -19,10 +19,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateUserRequest {
-     @NotBlank(message = ValidationMessages.User.FirstNameBlank)
-    @Length(min = 3, max = 50, message = ValidationMessages.User.FirstNameValid)
+    @NotBlank(message = ValidationMessages.User.FirstNameBlank)
+    @Length(min = 2, max = 50, message = ValidationMessages.User.FirstNameValid)
     private String firstName;
     @NotBlank(message = ValidationMessages.User.LastNameBlank)
+    @Length(min = 2, max = 50, message = ValidationMessages.User.LastNameValid)
     private String lastName;
     @NotNull(message = ValidationMessages.User.DateOfBirthBlank)
     private LocalDate dateOfBirth;

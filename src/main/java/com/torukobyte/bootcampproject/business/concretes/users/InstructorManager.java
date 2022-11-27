@@ -77,7 +77,8 @@ public class InstructorManager implements InstructorService {
         return new SuccessResult(Messages.Instructor.Deleted);
     }
 
-    private void checkIfInstructorExistById(int id) {
+    @Override
+    public void checkIfInstructorExistById(int id) {
         if (!repository.existsById(id)) {
             throw new BusinessException(Messages.Instructor.InstructorNotExists);
         }

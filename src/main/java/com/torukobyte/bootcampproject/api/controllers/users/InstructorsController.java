@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @AllArgsConstructor
-@RequestMapping(Paths.api + "instructors")
+@RequestMapping(Paths.apiV1 + "instructors")
 public class InstructorsController {
     private InstructorService service;
 
@@ -41,7 +41,9 @@ public class InstructorsController {
     }
 
     @PutMapping("/{id}")
-    DataResult<UpdateInstructorResponse> update(@Valid @RequestBody UpdateInstructorRequest request, @PathVariable int id) {
+    DataResult<UpdateInstructorResponse> update(
+            @Valid @RequestBody UpdateInstructorRequest request,
+            @PathVariable int id) {
         return service.update(request, id);
     }
 

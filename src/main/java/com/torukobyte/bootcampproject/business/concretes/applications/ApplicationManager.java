@@ -18,7 +18,6 @@ import com.torukobyte.bootcampproject.core.util.results.Result;
 import com.torukobyte.bootcampproject.core.util.results.SuccessDataResult;
 import com.torukobyte.bootcampproject.core.util.results.SuccessResult;
 import com.torukobyte.bootcampproject.entities.applications.Application;
-import com.torukobyte.bootcampproject.entities.bootcamps.Bootcamp;
 import com.torukobyte.bootcampproject.repository.abstracts.applications.ApplicationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -56,8 +55,9 @@ public class ApplicationManager implements ApplicationService {
 
     @Override
     public DataResult<CreateApplicationResponse> add(CreateApplicationRequest request) {
+        bootcampService.checkIfBootcampExistById(request.getBootcampId());
+        applicantService.checkIfApplicantExistById(request.getApplicantId());
         blacklistService.checkIfApplicantInBlacklist(request.getApplicantId());
-        applicantService.checkIfUserIsApplicant(request.getApplicantId());
         checkIfUserHasApplication(request.getApplicantId());
         bootcampService.checkIfBootcampIsActive(request.getBootcampId());
         Application application = mapper.forRequest().map(request, Application.class);
@@ -71,6 +71,8 @@ public class ApplicationManager implements ApplicationService {
     @Override
     public DataResult<UpdateApplicationResponse> update(UpdateApplicationRequest request, int id) {
         checkIfApplicationExistById(id);
+        bootcampService.checkIfBootcampExistById(request.getBootcampId());
+        applicantService.checkIfApplicantExistById(request.getApplicantId());
         Application application = mapper.forRequest().map(request, Application.class);
         application.setId(id);
         repository.save(application);
@@ -87,18 +89,7 @@ public class ApplicationManager implements ApplicationService {
         return new SuccessResult(Messages.Application.Deleted);
     }
 
-    private void checkIfApplicationExistById(int id) {
-        if (!repository.existsById(id)) {
-            throw new BusinessException(Messages.Application.ApplicationNotExists);
-        }
-    }
-
-    public void checkIfUserHasApplication(int userId) {
-        if (repository.existsApplicationsByApplicantId(userId)) {
-            throw new BusinessException(Messages.Application.UserHasApplication);
-        }
-    }
-
+    @Override
     public Result findApplicationAndDeleteFromApplication(int applicantId) {
         Application application = repository.findApplicationByApplicantId(applicantId);
         if (repository.existsApplicationsByApplicantId(applicantId)) {
@@ -108,5 +99,17 @@ public class ApplicationManager implements ApplicationService {
         }
 
         return new SuccessResult(Messages.Blacklist.Blank);
+    }
+
+    private void checkIfUserHasApplication(int userId) {
+        if (repository.existsApplicationsByApplicantId(userId)) {
+            throw new BusinessException(Messages.Application.UserHasApplication);
+        }
+    }
+
+    private void checkIfApplicationExistById(int id) {
+        if (!repository.existsById(id)) {
+            throw new BusinessException(Messages.Application.ApplicationNotExists);
+        }
     }
 }

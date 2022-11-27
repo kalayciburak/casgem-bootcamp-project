@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @AllArgsConstructor
-@RequestMapping(Paths.api + "blacklists")
+@RequestMapping(Paths.apiV1 + "blacklists")
 public class BlacklistsController {
     private BlacklistService service;
 
@@ -41,7 +41,9 @@ public class BlacklistsController {
     }
 
     @PutMapping("/{id}")
-    DataResult<UpdateBlacklistResponse> update(@Valid @RequestBody UpdateBlacklistRequest request, @PathVariable int id) {
+    DataResult<UpdateBlacklistResponse> update(
+            @Valid @RequestBody UpdateBlacklistRequest request,
+            @PathVariable int id) {
         return service.update(request, id);
     }
 

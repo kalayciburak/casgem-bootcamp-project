@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @AllArgsConstructor
-@RequestMapping(Paths.api + "employees")
+@RequestMapping(Paths.apiV1 + "employees")
 public class EmployeesController {
     private EmployeeService service;
 

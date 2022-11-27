@@ -63,7 +63,7 @@ public class BlacklistManager implements BlacklistService {
 
     @Override
     public DataResult<CreateBlacklistResponse> add(CreateBlacklistRequest request) {
-        applicantService.checkIfUserIsApplicant(request.getApplicantId());
+        applicantService.checkIfApplicantExistById(request.getApplicantId());
         checkIfApplicantInBlacklist(request.getApplicantId());
         Blacklist blacklist = mapper.forRequest().map(request, Blacklist.class);
         blacklist.setId(0);
@@ -78,6 +78,7 @@ public class BlacklistManager implements BlacklistService {
     @Override
     public DataResult<UpdateBlacklistResponse> update(UpdateBlacklistRequest request, int id) {
         checkIfBlacklistExistById(id);
+        applicantService.checkIfApplicantExistById(request.getApplicantId());
         Blacklist blacklist = mapper.forRequest().map(request, Blacklist.class);
         blacklist.setId(id);
         repository.save(blacklist);
@@ -94,15 +95,16 @@ public class BlacklistManager implements BlacklistService {
         return new SuccessResult(Messages.Blacklist.Deleted);
     }
 
-    private void checkIfBlacklistExistById(int id) {
-        if (!repository.existsById(id)) {
-            throw new BusinessException(Messages.Blacklist.BlacklistNotExist);
-        }
-    }
-
+    @Override
     public void checkIfApplicantInBlacklist(int id) {
         if (repository.existsBlacklistByApplicantId(id)) {
             throw new BusinessException(Messages.Blacklist.ApplicantInBlacklist);
+        }
+    }
+
+    private void checkIfBlacklistExistById(int id) {
+        if (!repository.existsById(id)) {
+            throw new BusinessException(Messages.Blacklist.BlacklistNotExist);
         }
     }
 }

@@ -7,19 +7,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateBlacklistRequest {
-    @NotBlank(message = ValidationMessages.Blacklist.ApplicantIdBlank)
+    @Min(value = 1, message = ValidationMessages.Blacklist.ApplicantIdBlank)
     private int applicantId;
     @NotBlank(message = ValidationMessages.Blacklist.ReasonBlank)
-    private LocalDate date;
-    @NotBlank(message = ValidationMessages.Blacklist.DateBlank)
     @Length(min = 5, max = 50, message = ValidationMessages.Blacklist.ReasonValid)
     private String reason;
 }

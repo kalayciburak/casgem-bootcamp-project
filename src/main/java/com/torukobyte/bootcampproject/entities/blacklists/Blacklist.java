@@ -21,7 +21,7 @@ public class Blacklist {
     @Column(name = "id")
     private int id;
     @Column(name = "date")
-    private LocalDate date;
+    private LocalDate date = LocalDate.now();
     @Column(name = "reason")
     private String reason;
     @ManyToOne()

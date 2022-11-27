@@ -1,6 +1,7 @@
 package com.torukobyte.bootcampproject.business.concretes.bootcamps;
 
 import com.torukobyte.bootcampproject.business.abstracts.bootcamps.BootcampService;
+import com.torukobyte.bootcampproject.business.abstracts.users.InstructorService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
 import com.torukobyte.bootcampproject.business.dto.requests.bootcamps.CreateBootcampRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.bootcamps.UpdateBootcampRequest;
@@ -19,13 +20,15 @@ import com.torukobyte.bootcampproject.repository.abstracts.bootcamps.BootcampRep
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class BootcampManager implements BootcampService {
     private final BootcampRepository repository;
-    private ModelMapperService mapper;
+    private final InstructorService instructorService;
+    private final ModelMapperService mapper;
 
     @Override
     public DataResult<List<GetAllBootcampResponse>> getAll() {
@@ -50,6 +53,8 @@ public class BootcampManager implements BootcampService {
 
     @Override
     public DataResult<CreateBootcampResponse> add(CreateBootcampRequest request) {
+        instructorService.checkIfInstructorExistById(request.getInstructorId());
+        checkIfStartDateBiggerThanEndDate(request.getStartDate(), request.getEndDate());
         Bootcamp bootcamp = mapper.forRequest().map(request, Bootcamp.class);
         bootcamp.setId(0);
         repository.save(bootcamp);
@@ -61,6 +66,8 @@ public class BootcampManager implements BootcampService {
     @Override
     public DataResult<UpdateBootcampResponse> update(UpdateBootcampRequest request, int id) {
         checkIfBootcampExistById(id);
+        instructorService.checkIfInstructorExistById(request.getInstructorId());
+        checkIfStartDateBiggerThanEndDate(request.getStartDate(), request.getEndDate());
         Bootcamp bootcamp = mapper.forRequest().map(request, Bootcamp.class);
         bootcamp.setId(id);
         repository.save(bootcamp);
@@ -77,18 +84,25 @@ public class BootcampManager implements BootcampService {
         return new SuccessResult(Messages.Bootcamp.Deleted);
     }
 
-    private void checkIfBootcampExistById(int id) {
-        if (!repository.existsById(id)) {
-            throw new BusinessException(Messages.Bootcamp.BootcampNotExists);
-        }
-    }
-
     @Override
     public void checkIfBootcampIsActive(int bootcampId) {
         checkIfBootcampExistById(bootcampId);
         Bootcamp bootcamp = repository.findById(bootcampId).orElseThrow();
         if (bootcamp.getState() == 2) {
             throw new BusinessException(Messages.Bootcamp.BootcampIsNotActive);
+        }
+    }
+
+    @Override
+    public void checkIfBootcampExistById(int id) {
+        if (!repository.existsById(id)) {
+            throw new BusinessException(Messages.Bootcamp.BootcampNotExists);
+        }
+    }
+
+    private void checkIfStartDateBiggerThanEndDate(LocalDate startDate, LocalDate endDate) {
+        if (startDate.isAfter(endDate) || startDate.isEqual(endDate)) {
+            throw new BusinessException(Messages.Bootcamp.StartDateBigThanEndDate);
         }
     }
 }

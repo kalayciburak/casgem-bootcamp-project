@@ -1,11 +1,6 @@
 package com.torukobyte.bootcampproject.business.constants;
 
 public class Messages {
-
-    public static class User {
-        public static final String NotFound = "User not found";
-    }
-
     public static class Applicant {
         public static final String Created = "Applicant created.";
         public static final String Updated = "Applicant updated.";
@@ -16,7 +11,6 @@ public class Messages {
         public static final String BecameApplicant = "Employee became applicant.";
         public static final String ApplicantExists = "Applicant already exists.";
         public static final String ApplicantNotExists = "Applicant not exists.";
-        public static final String NotAnApplicantMessages = "User is not an applicant.";
         public static final String AboutValid = "About must be between 5 and 50 characters";
     }
 
@@ -60,6 +54,7 @@ public class Messages {
         public static final String ListById = "Bootcamp listed by id.";
         public static final String BootcampNotExists = "Bootcamp not exists.";
         public static final String BootcampIsNotActive = "Bootcamp is not active";
+        public static final String StartDateBigThanEndDate = "Start date must be before end date";
     }
 
     public static class Blacklist {
@@ -72,6 +67,5 @@ public class Messages {
         public static final String BlacklistNotExist = "Blacklist not exist.";
         public static final String RemovedFromApplication = " Removed from application";
         public static final String Blank = "";
-        public static final String NotAnApplicant = "User is not an applicant.";
     }
 }
