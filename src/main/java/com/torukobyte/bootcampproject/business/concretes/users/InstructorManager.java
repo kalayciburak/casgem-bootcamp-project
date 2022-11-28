@@ -82,6 +82,21 @@ public class InstructorManager implements InstructorService {
     }
 
     @Override
+    public Result changePassword(String oldPassword, String newPassword, String confirmPassword, int id) {
+        checkIfInstructorExistById(id);
+        if (!repository.findById(id).get().getPassword().equals(oldPassword)) {
+            throw new ValidationException(ValidationMessages.User.OldPasswordNotMatch);
+        }
+        if (oldPassword.equals(newPassword)) {
+            throw new ValidationException(ValidationMessages.User.ThereIsNoChangeInPassword);
+        }
+        comparePassword(newPassword, confirmPassword);
+        repository.changePassword(newPassword, id);
+
+        return new SuccessResult(Messages.User.PasswordChanged);
+    }
+
+    @Override
     public void checkIfInstructorExistById(int id) {
         if (!repository.existsById(id)) {
             throw new BusinessException(Messages.Instructor.InstructorNotExists);

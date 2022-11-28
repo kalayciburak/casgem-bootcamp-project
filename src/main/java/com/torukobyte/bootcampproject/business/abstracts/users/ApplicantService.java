@@ -19,5 +19,6 @@ public interface ApplicantService {
     Result delete(int id);
     DataResult<GetApplicantResponse> beAnApplicant(String about, int id);
     Result removeAnApplicant(int id);
+    Result changePassword(String oldPassword, String newPassword, String confirmPassword, int id);
     void checkIfApplicantExistById(int id);
 }

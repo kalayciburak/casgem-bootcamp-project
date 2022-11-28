@@ -17,5 +17,6 @@ public interface EmployeeService {
     DataResult<CreateEmployeeResponse> add(CreateEmployeeRequest request);
     DataResult<UpdateEmployeeResponse> update(UpdateEmployeeRequest request, int id);
     Result delete(int id);
+    Result changePassword(String oldPassword, String newPassword, String confirmPassword, int id);
     void checkIfUserIsEmployee(int id);
 }

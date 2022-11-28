@@ -17,5 +17,6 @@ public interface InstructorService {
     DataResult<CreateInstructorResponse> add(CreateInstructorRequest request);
     DataResult<UpdateInstructorResponse> update(UpdateInstructorRequest request, int id);
     Result delete(int id);
+    Result changePassword(String oldPassword, String newPassword, String confirmPassword, int id);
     void checkIfInstructorExistById(int id);
 }

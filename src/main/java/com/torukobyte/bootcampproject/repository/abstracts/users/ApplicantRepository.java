@@ -32,4 +32,8 @@ public interface ApplicantRepository extends JpaRepository<Applicant, Integer> {
     void removeApplicantFromBlacklist(@Param("id") int id);
 
     boolean existsApplicantByNationalIdentity(String nationalIdentity);
+    @Modifying
+    @Query(value = "update Users set password = :newPassword where id = :id", nativeQuery = true)
+    @Transactional
+    void changePassword(String newPassword, int id);
 }

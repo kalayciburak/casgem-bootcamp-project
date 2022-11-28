@@ -16,6 +16,9 @@ public class ValidationMessages {
         public static final String PasswordValid = "Password must be minimum 8 characters, at least one letter, one number and one special character:";
         public static final String ConfirmPasswordBlank = "Confirm password is required";
         public static final String ConfirmPasswordValid = "Confirm password must be same with password";
+        public static final String OldPasswordBlank = "Old password is required";
+        public static final String OldPasswordNotMatch = "Old password is not match";
+        public static final String ThereIsNoChangeInPassword = "There is no change in the password. Please enter a new password";
     }
 
     public static class Applicant {

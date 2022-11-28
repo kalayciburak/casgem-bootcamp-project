@@ -1,6 +1,10 @@
 package com.torukobyte.bootcampproject.business.constants;
 
 public class Messages {
+    public static class User {
+        public static final String PasswordChanged = "Password changed successfully.";
+    }
+
     public static class Applicant {
         public static final String Created = "Applicant created.";
         public static final String Updated = "Applicant updated.";

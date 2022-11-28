@@ -62,4 +62,13 @@ public class ApplicantsController {
     Result removeAnApplicant(@PathVariable int id) {
         return service.removeAnApplicant(id);
     }
+
+    @PutMapping("/change-password/{id}")
+    Result changePassword(
+            @RequestParam String oldPassword,
+            @RequestParam String newPassword,
+            @RequestParam String confirmPassword,
+            @PathVariable int id) {
+        return service.changePassword(oldPassword, newPassword, confirmPassword, id);
+    }
 }

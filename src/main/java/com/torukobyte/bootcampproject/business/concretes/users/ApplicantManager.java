@@ -107,6 +107,21 @@ public class ApplicantManager implements ApplicantService {
     }
 
     @Override
+    public Result changePassword(String oldPassword, String newPassword, String confirmPassword, int id) {
+        checkIfApplicantExistById(id);
+        if (!repository.findById(id).get().getPassword().equals(oldPassword)) {
+            throw new ValidationException(ValidationMessages.User.OldPasswordNotMatch);
+        }
+        if (oldPassword.equals(newPassword)) {
+            throw new ValidationException(ValidationMessages.User.ThereIsNoChangeInPassword);
+        }
+        comparePassword(newPassword, confirmPassword);
+        repository.changePassword(newPassword, id);
+
+        return new SuccessResult(Messages.User.PasswordChanged);
+    }
+
+    @Override
     public void checkIfApplicantExistById(int id) {
         if (!repository.existsById(id)) {
             throw new BusinessException(Messages.Applicant.ApplicantNotExists);
