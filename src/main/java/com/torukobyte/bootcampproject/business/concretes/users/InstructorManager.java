@@ -2,6 +2,7 @@ package com.torukobyte.bootcampproject.business.concretes.users;
 
 import com.torukobyte.bootcampproject.business.abstracts.users.InstructorService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
+import com.torukobyte.bootcampproject.business.constants.ValidationMessages;
 import com.torukobyte.bootcampproject.business.dto.requests.users.instructors.CreateInstructorRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.users.instructors.UpdateInstructorRequest;
 import com.torukobyte.bootcampproject.business.dto.responses.users.instructors.CreateInstructorResponse;
@@ -19,6 +20,7 @@ import com.torukobyte.bootcampproject.repository.abstracts.users.InstructorRepos
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ValidationException;
 import java.util.List;
 
 @Service
@@ -49,6 +51,7 @@ public class InstructorManager implements InstructorService {
 
     @Override
     public DataResult<CreateInstructorResponse> add(CreateInstructorRequest request) {
+        comparePassword(request.getPassword(), request.getConfirmPassword());
         checkIfInstructorExistByNationalIdentity(request.getNationalIdentity());
         Instructor instructor = mapper.forRequest().map(request, Instructor.class);
         repository.save(instructor);
@@ -60,6 +63,7 @@ public class InstructorManager implements InstructorService {
     @Override
     public DataResult<UpdateInstructorResponse> update(UpdateInstructorRequest request, int id) {
         checkIfInstructorExistById(id);
+        comparePassword(request.getPassword(), request.getConfirmPassword());
         checkIfInstructorExistByNationalIdentity(request.getNationalIdentity());
         Instructor instructor = mapper.forRequest().map(request, Instructor.class);
         instructor.setId(id);
@@ -87,6 +91,12 @@ public class InstructorManager implements InstructorService {
     private void checkIfInstructorExistByNationalIdentity(String nationalIdentity) {
         if (repository.existsInstructortByNationalIdentity(nationalIdentity)) {
             throw new BusinessException(Messages.Instructor.InstructorExists);
+        }
+    }
+
+    private void comparePassword(String password, String confirmPassword) {
+        if (!password.equals(confirmPassword)) {
+            throw new ValidationException(ValidationMessages.User.ConfirmPasswordValid);
         }
     }
 }

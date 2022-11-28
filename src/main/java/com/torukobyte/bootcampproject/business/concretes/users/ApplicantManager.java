@@ -3,6 +3,7 @@ package com.torukobyte.bootcampproject.business.concretes.users;
 import com.torukobyte.bootcampproject.business.abstracts.users.ApplicantService;
 import com.torukobyte.bootcampproject.business.abstracts.users.EmployeeService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
+import com.torukobyte.bootcampproject.business.constants.ValidationMessages;
 import com.torukobyte.bootcampproject.business.dto.requests.users.applicants.CreateApplicantRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.users.applicants.UpdateApplicantRequest;
 import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.CreateApplicantResponse;
@@ -20,6 +21,7 @@ import com.torukobyte.bootcampproject.repository.abstracts.users.ApplicantReposi
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ValidationException;
 import java.util.List;
 
 @Service
@@ -51,6 +53,7 @@ public class ApplicantManager implements ApplicantService {
 
     @Override
     public DataResult<CreateApplicantResponse> add(CreateApplicantRequest request) {
+        comparePassword(request.getPassword(), request.getConfirmPassword());
         checkIfApplicantExistByNationalIdentity(request.getNationalIdentity());
         Applicant appliicant = mapper.forRequest().map(request, Applicant.class);
         repository.save(appliicant);
@@ -62,6 +65,7 @@ public class ApplicantManager implements ApplicantService {
     @Override
     public DataResult<UpdateApplicantResponse> update(UpdateApplicantRequest request, int id) {
         checkIfApplicantExistById(id);
+        comparePassword(request.getPassword(), request.getConfirmPassword());
         checkIfApplicantExistByNationalIdentity(request.getNationalIdentity());
         Applicant applicant = mapper.forRequest().map(request, Applicant.class);
         applicant.setId(id);
@@ -123,7 +127,13 @@ public class ApplicantManager implements ApplicantService {
 
     private void checkIfAboutValid(String about) {
         if (about.length() <= 5 || about.length() >= 50) {
-            throw new BusinessException(Messages.Applicant.AboutValid);
+            throw new ValidationException(Messages.Applicant.AboutValid);
+        }
+    }
+
+    private void comparePassword(String password, String confirmPassword) {
+        if (!password.equals(confirmPassword)) {
+            throw new ValidationException(ValidationMessages.User.ConfirmPasswordValid);
         }
     }
 }

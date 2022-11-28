@@ -2,6 +2,7 @@ package com.torukobyte.bootcampproject.business.concretes.users;
 
 import com.torukobyte.bootcampproject.business.abstracts.users.EmployeeService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
+import com.torukobyte.bootcampproject.business.constants.ValidationMessages;
 import com.torukobyte.bootcampproject.business.dto.requests.users.employees.CreateEmployeeRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.users.employees.UpdateEmployeeRequest;
 import com.torukobyte.bootcampproject.business.dto.responses.users.employees.CreateEmployeeResponse;
@@ -19,6 +20,7 @@ import com.torukobyte.bootcampproject.repository.abstracts.users.EmployeeReposit
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ValidationException;
 import java.util.List;
 
 @Service
@@ -49,6 +51,7 @@ public class EmployeeManager implements EmployeeService {
 
     @Override
     public DataResult<CreateEmployeeResponse> add(CreateEmployeeRequest request) {
+        comparePassword(request.getPassword(), request.getConfirmPassword());
         checkIfEmployeeExistByNationalIdentity(request.getNationalIdentity());
         Employee employee = mapper.forRequest().map(request, Employee.class);
         repository.save(employee);
@@ -60,6 +63,7 @@ public class EmployeeManager implements EmployeeService {
     @Override
     public DataResult<UpdateEmployeeResponse> update(UpdateEmployeeRequest request, int id) {
         checkIfEmployeeExistById(id);
+        comparePassword(request.getPassword(), request.getConfirmPassword());
         checkIfEmployeeExistByNationalIdentity(request.getNationalIdentity());
         Employee employee = mapper.forRequest().map(request, Employee.class);
         employee.setId(id);
@@ -93,6 +97,12 @@ public class EmployeeManager implements EmployeeService {
     private void checkIfEmployeeExistByNationalIdentity(String nationalIdentity) {
         if (repository.existsEmployeetByNationalIdentity(nationalIdentity)) {
             throw new BusinessException(Messages.Employee.EmployeeExists);
+        }
+    }
+
+    private void comparePassword(String password, String confirmPassword) {
+        if (!password.equals(confirmPassword)) {
+            throw new ValidationException(ValidationMessages.User.ConfirmPasswordValid);
         }
     }
 }

@@ -42,7 +42,7 @@ public class Messages {
         public static final String ListAll = "Applications listed.";
         public static final String ListById = "Application listed by id.";
         public static final String ApplicationNotExists = "Application not exists.";
-        public static final String UserHasApplication = "User has already applied to a bootcamp";
+        public static final String UserHasApplication = "Applicant has already applied to a bootcamp";
         public static final String ApplicationIsNotActive = "Application is not active";
     }
 

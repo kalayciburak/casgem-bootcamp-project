@@ -36,4 +36,6 @@ public class UpdateUserRequest {
     @NotBlank(message = ValidationMessages.User.PasswordBlank)
     @Pattern(regexp = Regexes.Password, message = ValidationMessages.User.PasswordValid)
     private String password;
+    @NotBlank(message = ValidationMessages.User.ConfirmPasswordBlank)
+    private String confirmPassword;
 }

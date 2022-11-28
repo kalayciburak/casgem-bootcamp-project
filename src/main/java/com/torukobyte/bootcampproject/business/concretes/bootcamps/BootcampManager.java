@@ -20,6 +20,7 @@ import com.torukobyte.bootcampproject.repository.abstracts.bootcamps.BootcampRep
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ValidationException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -102,7 +103,7 @@ public class BootcampManager implements BootcampService {
 
     private void checkIfStartDateBiggerThanEndDate(LocalDate startDate, LocalDate endDate) {
         if (startDate.isAfter(endDate) || startDate.isEqual(endDate)) {
-            throw new BusinessException(Messages.Bootcamp.StartDateBigThanEndDate);
+            throw new ValidationException(Messages.Bootcamp.StartDateBigThanEndDate);
         }
     }
 }

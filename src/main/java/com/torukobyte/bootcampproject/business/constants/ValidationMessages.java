@@ -14,6 +14,8 @@ public class ValidationMessages {
         public static final String EmailValid = "Email must be valid";
         public static final String PasswordBlank = "Password is required";
         public static final String PasswordValid = "Password must be minimum 8 characters, at least one letter, one number and one special character:";
+        public static final String ConfirmPasswordBlank = "Confirm password is required";
+        public static final String ConfirmPasswordValid = "Confirm password must be same with password";
     }
 
     public static class Applicant {
