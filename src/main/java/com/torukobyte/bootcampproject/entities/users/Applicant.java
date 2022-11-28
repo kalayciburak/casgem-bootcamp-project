@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -24,6 +21,6 @@ public class Applicant extends User {
     private String about;
     @OneToMany(mappedBy = "applicant")
     private List<Application> applications;
-    @OneToMany(mappedBy = "applicant")
-    private List<Blacklist> blacklists;
+    @OneToOne(mappedBy = "applicant")
+    private Blacklist blacklist;
 }

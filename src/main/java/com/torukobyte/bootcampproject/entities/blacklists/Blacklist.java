@@ -24,7 +24,7 @@ public class Blacklist {
     private LocalDate date = LocalDate.now();
     @Column(name = "reason")
     private String reason;
-    @ManyToOne()
+    @OneToOne()
     @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 }
