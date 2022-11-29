@@ -3,6 +3,7 @@ package com.torukobyte.bootcampproject.business.concretes.users;
 import com.torukobyte.bootcampproject.business.abstracts.users.EmployeeService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
 import com.torukobyte.bootcampproject.business.constants.ValidationMessages;
+import com.torukobyte.bootcampproject.business.dto.requests.users.ChangeUserPasswordRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.users.employees.CreateEmployeeRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.users.employees.UpdateEmployeeRequest;
 import com.torukobyte.bootcampproject.business.dto.responses.users.employees.CreateEmployeeResponse;
@@ -82,16 +83,12 @@ public class EmployeeManager implements EmployeeService {
     }
 
     @Override
-    public Result changePassword(String oldPassword, String newPassword, String confirmPassword, int id) {
+    public Result changePassword(ChangeUserPasswordRequest request, int id) {
         checkIfEmployeeExistById(id);
-        if (!repository.findById(id).get().getPassword().equals(oldPassword)) {
-            throw new ValidationException(ValidationMessages.User.OldPasswordNotMatch);
-        }
-        if (oldPassword.equals(newPassword)) {
-            throw new ValidationException(ValidationMessages.User.ThereIsNoChangeInPassword);
-        }
-        comparePassword(newPassword, confirmPassword);
-        repository.changePassword(newPassword, id);
+        checkPasswordIsCorrect(request.getOldPassword(), id);
+        checkPasswordIsNew(request.getOldPassword(), request.getNewPassword());
+        comparePassword(request.getNewPassword(), request.getConfirmPassword());
+        repository.changePassword(request.getNewPassword(), id);
 
         return new SuccessResult(Messages.User.PasswordChanged);
     }
@@ -100,6 +97,18 @@ public class EmployeeManager implements EmployeeService {
     public void checkIfUserIsEmployee(int id) {
         if (!repository.existsById(id)) {
             throw new BusinessException(Messages.Employee.NotAnEmployee);
+        }
+    }
+
+    private void checkPasswordIsCorrect(String oldPassword, int id) {
+        if (!repository.findById(id).get().getPassword().equals(oldPassword)) {
+            throw new ValidationException(ValidationMessages.User.OldPasswordNotMatch);
+        }
+    }
+
+    private void checkPasswordIsNew(String oldPassword, String newPassword) {
+        if (oldPassword.equals(newPassword)) {
+            throw new ValidationException(ValidationMessages.User.ThereIsNoChangeInPassword);
         }
     }
 

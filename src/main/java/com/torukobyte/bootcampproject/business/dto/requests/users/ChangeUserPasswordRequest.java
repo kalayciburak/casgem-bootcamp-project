@@ -21,5 +21,5 @@ public class ChangeUserPasswordRequest {
     @Pattern(regexp = Regexes.Password, message = ValidationMessages.User.PasswordValid)
     private String newPassword;
     @NotBlank(message = ValidationMessages.User.ConfirmPasswordBlank)
-    private String confirmNewPassword;
+    private String confirmPassword;
 }

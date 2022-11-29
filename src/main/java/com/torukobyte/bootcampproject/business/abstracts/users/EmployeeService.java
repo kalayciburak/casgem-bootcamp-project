@@ -1,5 +1,6 @@
 package com.torukobyte.bootcampproject.business.abstracts.users;
 
+import com.torukobyte.bootcampproject.business.dto.requests.users.ChangeUserPasswordRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.users.employees.CreateEmployeeRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.users.employees.UpdateEmployeeRequest;
 import com.torukobyte.bootcampproject.business.dto.responses.users.employees.CreateEmployeeResponse;
@@ -17,6 +18,6 @@ public interface EmployeeService {
     DataResult<CreateEmployeeResponse> add(CreateEmployeeRequest request);
     DataResult<UpdateEmployeeResponse> update(UpdateEmployeeRequest request, int id);
     Result delete(int id);
-    Result changePassword(String oldPassword, String newPassword, String confirmPassword, int id);
+    Result changePassword(ChangeUserPasswordRequest request, int id);
     void checkIfUserIsEmployee(int id);
 }

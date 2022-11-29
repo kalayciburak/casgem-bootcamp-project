@@ -1,5 +1,6 @@
 package com.torukobyte.bootcampproject.business.abstracts.users;
 
+import com.torukobyte.bootcampproject.business.dto.requests.users.ChangeUserPasswordRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.users.applicants.CreateApplicantRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.users.applicants.UpdateApplicantRequest;
 import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.CreateApplicantResponse;
@@ -19,6 +20,6 @@ public interface ApplicantService {
     Result delete(int id);
     DataResult<GetApplicantResponse> beAnApplicant(String about, int id);
     Result removeAnApplicant(int id);
-    Result changePassword(String oldPassword, String newPassword, String confirmPassword, int id);
+    Result changePassword(ChangeUserPasswordRequest request, int id);
     void checkIfApplicantExistById(int id);
 }

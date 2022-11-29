@@ -2,6 +2,7 @@ package com.torukobyte.bootcampproject.api.controllers.users;
 
 import com.torukobyte.bootcampproject.business.abstracts.users.InstructorService;
 import com.torukobyte.bootcampproject.business.constants.Paths;
+import com.torukobyte.bootcampproject.business.dto.requests.users.ChangeUserPasswordRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.users.instructors.CreateInstructorRequest;
 import com.torukobyte.bootcampproject.business.dto.requests.users.instructors.UpdateInstructorRequest;
 import com.torukobyte.bootcampproject.business.dto.responses.users.instructors.CreateInstructorResponse;
@@ -53,11 +54,7 @@ public class InstructorsController {
     }
 
     @PutMapping("/change-password/{id}")
-    Result changePassword(
-            @RequestParam String oldPassword,
-            @RequestParam String newPassword,
-            @RequestParam String confirmPassword,
-            @PathVariable int id) {
-        return service.changePassword(oldPassword, newPassword, confirmPassword, id);
+    Result changePassword(@RequestBody ChangeUserPasswordRequest request, @PathVariable int id) {
+        return service.changePassword(request, id);
     }
 }
