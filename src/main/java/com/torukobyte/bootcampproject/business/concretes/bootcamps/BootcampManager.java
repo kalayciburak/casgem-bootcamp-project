@@ -3,12 +3,12 @@ package com.torukobyte.bootcampproject.business.concretes.bootcamps;
 import com.torukobyte.bootcampproject.business.abstracts.bootcamps.BootcampService;
 import com.torukobyte.bootcampproject.business.abstracts.users.InstructorService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
-import com.torukobyte.bootcampproject.business.dto.requests.bootcamps.CreateBootcampRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.bootcamps.UpdateBootcampRequest;
-import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.CreateBootcampResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.GetAllBootcampResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.GetBootcampResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.UpdateBootcampResponse;
+import com.torukobyte.bootcampproject.business.dto.requests.create.bootcamp.CreateBootcampRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.bootcamp.UpdateBootcampRequest;
+import com.torukobyte.bootcampproject.business.dto.responses.create.bootcamp.CreateBootcampResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.bootcamps.GetAllBootcampsResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.bootcamps.GetBootcampResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.update.bootcamp.UpdateBootcampResponse;
 import com.torukobyte.bootcampproject.core.util.exceptions.BusinessException;
 import com.torukobyte.bootcampproject.core.util.mapping.ModelMapperService;
 import com.torukobyte.bootcampproject.core.util.results.DataResult;
@@ -32,12 +32,12 @@ public class BootcampManager implements BootcampService {
     private final ModelMapperService mapper;
 
     @Override
-    public DataResult<List<GetAllBootcampResponse>> getAll() {
+    public DataResult<List<GetAllBootcampsResponse>> getAll() {
 
         List<Bootcamp> bootcamps = repository.findAll();
-        List<GetAllBootcampResponse> data = bootcamps
+        List<GetAllBootcampsResponse> data = bootcamps
                 .stream()
-                .map(bootcamp -> mapper.forResponse().map(bootcamp, GetAllBootcampResponse.class))
+                .map(bootcamp -> mapper.forResponse().map(bootcamp, GetAllBootcampsResponse.class))
                 .toList();
 
         return new SuccessDataResult<>(data, Messages.Bootcamp.ListAll);

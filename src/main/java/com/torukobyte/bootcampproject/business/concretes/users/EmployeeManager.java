@@ -3,13 +3,13 @@ package com.torukobyte.bootcampproject.business.concretes.users;
 import com.torukobyte.bootcampproject.business.abstracts.users.EmployeeService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
 import com.torukobyte.bootcampproject.business.constants.ValidationMessages;
-import com.torukobyte.bootcampproject.business.dto.requests.users.ChangeUserPasswordRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.users.employees.CreateEmployeeRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.users.employees.UpdateEmployeeRequest;
-import com.torukobyte.bootcampproject.business.dto.responses.users.employees.CreateEmployeeResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.employees.GetAllEmployeeResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.employees.GetEmployeeResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.employees.UpdateEmployeeResponse;
+import com.torukobyte.bootcampproject.business.dto.requests.create.users.employee.CreateEmployeeRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.users.ChangeUserPasswordRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.users.employee.UpdateEmployeeRequest;
+import com.torukobyte.bootcampproject.business.dto.responses.create.users.employee.CreateEmployeeResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.users.employees.GetAllEmployeesResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.users.employees.GetEmployeeResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.update.users.employee.UpdateEmployeeResponse;
 import com.torukobyte.bootcampproject.core.util.exceptions.BusinessException;
 import com.torukobyte.bootcampproject.core.util.mapping.ModelMapperService;
 import com.torukobyte.bootcampproject.core.util.results.DataResult;
@@ -31,11 +31,11 @@ public class EmployeeManager implements EmployeeService {
     private ModelMapperService mapper;
 
     @Override
-    public DataResult<List<GetAllEmployeeResponse>> getAll() {
+    public DataResult<List<GetAllEmployeesResponse>> getAll() {
         List<Employee> employees = repository.findAll();
-        List<GetAllEmployeeResponse> data = employees
+        List<GetAllEmployeesResponse> data = employees
                 .stream()
-                .map(employee -> mapper.forResponse().map(employee, GetAllEmployeeResponse.class))
+                .map(employee -> mapper.forResponse().map(employee, GetAllEmployeesResponse.class))
                 .toList();
 
         return new SuccessDataResult<>(data, Messages.Employee.ListAll);

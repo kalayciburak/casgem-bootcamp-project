@@ -5,12 +5,12 @@ import com.torukobyte.bootcampproject.business.abstracts.blacklists.BlacklistSer
 import com.torukobyte.bootcampproject.business.abstracts.bootcamps.BootcampService;
 import com.torukobyte.bootcampproject.business.abstracts.users.ApplicantService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
-import com.torukobyte.bootcampproject.business.dto.requests.applications.CreateApplicationRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.applications.UpdateApplicationRequest;
-import com.torukobyte.bootcampproject.business.dto.responses.applications.CreateApplicationResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.applications.GetAllApplicationResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.applications.GetApplicationResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.applications.UpdateApplicationResponse;
+import com.torukobyte.bootcampproject.business.dto.requests.create.application.CreateApplicationRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.application.UpdateApplicationRequest;
+import com.torukobyte.bootcampproject.business.dto.responses.create.application.CreateApplicationResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.applications.GetAllApplicationsResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.applications.GetApplicationResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.update.application.UpdateApplicationResponse;
 import com.torukobyte.bootcampproject.core.util.exceptions.BusinessException;
 import com.torukobyte.bootcampproject.core.util.mapping.ModelMapperService;
 import com.torukobyte.bootcampproject.core.util.results.DataResult;
@@ -34,11 +34,11 @@ public class ApplicationManager implements ApplicationService {
     private final ModelMapperService mapper;
 
     @Override
-    public DataResult<List<GetAllApplicationResponse>> getAll() {
+    public DataResult<List<GetAllApplicationsResponse>> getAll() {
         List<Application> applications = repository.findAll();
-        List<GetAllApplicationResponse> data = applications
+        List<GetAllApplicationsResponse> data = applications
                 .stream()
-                .map(application -> mapper.forResponse().map(application, GetAllApplicationResponse.class))
+                .map(application -> mapper.forResponse().map(application, GetAllApplicationsResponse.class))
                 .toList();
 
         return new SuccessDataResult<>(data, Messages.Application.ListAll);
@@ -47,7 +47,7 @@ public class ApplicationManager implements ApplicationService {
     @Override
     public DataResult<GetApplicationResponse> getById(int id) {
         checkIfApplicationExistById(id);
-        Application application = repository.getById(id);
+        Application application = repository.findById(id).orElseThrow();
         GetApplicationResponse data = mapper.forResponse().map(application, GetApplicationResponse.class);
 
         return new SuccessDataResult<>(data, Messages.Application.ListById);

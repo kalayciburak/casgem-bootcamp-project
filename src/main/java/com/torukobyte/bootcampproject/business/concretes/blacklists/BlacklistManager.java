@@ -4,12 +4,12 @@ import com.torukobyte.bootcampproject.business.abstracts.applications.Applicatio
 import com.torukobyte.bootcampproject.business.abstracts.blacklists.BlacklistService;
 import com.torukobyte.bootcampproject.business.abstracts.users.ApplicantService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
-import com.torukobyte.bootcampproject.business.dto.requests.blacklists.CreateBlacklistRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.blacklists.UpdateBlacklistRequest;
-import com.torukobyte.bootcampproject.business.dto.responses.blacklists.CreateBlacklistResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.blacklists.GetAllBlacklistResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.blacklists.GetBlacklistResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.blacklists.UpdateBlacklistResponse;
+import com.torukobyte.bootcampproject.business.dto.requests.create.blacklist.CreateBlacklistRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.blacklist.UpdateBlacklistRequest;
+import com.torukobyte.bootcampproject.business.dto.responses.create.blacklist.CreateBlacklistResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.blacklists.GetAllBlacklistsResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.blacklists.GetBlacklistResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.update.blacklist.UpdateBlacklistResponse;
 import com.torukobyte.bootcampproject.core.util.exceptions.BusinessException;
 import com.torukobyte.bootcampproject.core.util.mapping.ModelMapperService;
 import com.torukobyte.bootcampproject.core.util.results.DataResult;
@@ -42,11 +42,11 @@ public class BlacklistManager implements BlacklistService {
     }
 
     @Override
-    public DataResult<List<GetAllBlacklistResponse>> getAll() {
+    public DataResult<List<GetAllBlacklistsResponse>> getAll() {
         List<Blacklist> blacklists = repository.findAll();
-        List<GetAllBlacklistResponse> data = blacklists
+        List<GetAllBlacklistsResponse> data = blacklists
                 .stream()
-                .map(blacklist -> mapper.forResponse().map(blacklist, GetAllBlacklistResponse.class))
+                .map(blacklist -> mapper.forResponse().map(blacklist, GetAllBlacklistsResponse.class))
                 .toList();
 
         return new SuccessDataResult<>(data, Messages.Blacklist.ListAll);

@@ -3,13 +3,13 @@ package com.torukobyte.bootcampproject.business.concretes.users;
 import com.torukobyte.bootcampproject.business.abstracts.users.InstructorService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
 import com.torukobyte.bootcampproject.business.constants.ValidationMessages;
-import com.torukobyte.bootcampproject.business.dto.requests.users.ChangeUserPasswordRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.users.instructors.CreateInstructorRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.users.instructors.UpdateInstructorRequest;
-import com.torukobyte.bootcampproject.business.dto.responses.users.instructors.CreateInstructorResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.instructors.GetAllInstructorResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.instructors.GetInstructorResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.instructors.UpdateInstructorResponse;
+import com.torukobyte.bootcampproject.business.dto.requests.create.users.instructor.CreateInstructorRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.users.ChangeUserPasswordRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.users.instructor.UpdateInstructorRequest;
+import com.torukobyte.bootcampproject.business.dto.responses.create.users.instructor.CreateInstructorResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.users.instructors.GetAllInstructorsResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.users.instructors.GetInstructorResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.update.users.instructor.UpdateInstructorResponse;
 import com.torukobyte.bootcampproject.core.util.exceptions.BusinessException;
 import com.torukobyte.bootcampproject.core.util.mapping.ModelMapperService;
 import com.torukobyte.bootcampproject.core.util.results.DataResult;
@@ -31,11 +31,11 @@ public class InstructorManager implements InstructorService {
     private ModelMapperService mapper;
 
     @Override
-    public DataResult<List<GetAllInstructorResponse>> getAll() {
+    public DataResult<List<GetAllInstructorsResponse>> getAll() {
         List<Instructor> instructors = repository.findAll();
-        List<GetAllInstructorResponse> data = instructors
+        List<GetAllInstructorsResponse> data = instructors
                 .stream()
-                .map(instructor -> mapper.forResponse().map(instructor, GetAllInstructorResponse.class))
+                .map(instructor -> mapper.forResponse().map(instructor, GetAllInstructorsResponse.class))
                 .toList();
 
         return new SuccessDataResult<>(data, Messages.Instructor.ListAll);

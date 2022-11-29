@@ -4,13 +4,13 @@ import com.torukobyte.bootcampproject.business.abstracts.users.ApplicantService;
 import com.torukobyte.bootcampproject.business.abstracts.users.EmployeeService;
 import com.torukobyte.bootcampproject.business.constants.Messages;
 import com.torukobyte.bootcampproject.business.constants.ValidationMessages;
-import com.torukobyte.bootcampproject.business.dto.requests.users.ChangeUserPasswordRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.users.applicants.CreateApplicantRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.users.applicants.UpdateApplicantRequest;
-import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.CreateApplicantResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.GetAllApplicantResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.GetApplicantResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.UpdateApplicantResponse;
+import com.torukobyte.bootcampproject.business.dto.requests.create.users.applicant.CreateApplicantRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.users.ChangeUserPasswordRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.users.applicant.UpdateApplicantRequest;
+import com.torukobyte.bootcampproject.business.dto.responses.create.users.applicant.CreateApplicantResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.users.applicants.GetAllApplicantsResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.users.applicants.GetApplicantResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.update.users.applicant.UpdateApplicantResponse;
 import com.torukobyte.bootcampproject.core.util.exceptions.BusinessException;
 import com.torukobyte.bootcampproject.core.util.mapping.ModelMapperService;
 import com.torukobyte.bootcampproject.core.util.results.DataResult;
@@ -33,11 +33,11 @@ public class ApplicantManager implements ApplicantService {
     private ModelMapperService mapper;
 
     @Override
-    public DataResult<List<GetAllApplicantResponse>> getAll() {
+    public DataResult<List<GetAllApplicantsResponse>> getAll() {
         List<Applicant> appliicants = repository.findAll();
-        List<GetAllApplicantResponse> data = appliicants
+        List<GetAllApplicantsResponse> data = appliicants
                 .stream()
-                .map(applicant -> mapper.forResponse().map(applicant, GetAllApplicantResponse.class))
+                .map(applicant -> mapper.forResponse().map(applicant, GetAllApplicantsResponse.class))
                 .toList();
 
         return new SuccessDataResult<>(data, Messages.Applicant.ListAll);

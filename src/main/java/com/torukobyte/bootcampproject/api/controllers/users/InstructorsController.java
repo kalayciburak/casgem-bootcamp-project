@@ -2,13 +2,13 @@ package com.torukobyte.bootcampproject.api.controllers.users;
 
 import com.torukobyte.bootcampproject.business.abstracts.users.InstructorService;
 import com.torukobyte.bootcampproject.business.constants.Paths;
-import com.torukobyte.bootcampproject.business.dto.requests.users.ChangeUserPasswordRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.users.instructors.CreateInstructorRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.users.instructors.UpdateInstructorRequest;
-import com.torukobyte.bootcampproject.business.dto.responses.users.instructors.CreateInstructorResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.instructors.GetAllInstructorResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.instructors.GetInstructorResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.instructors.UpdateInstructorResponse;
+import com.torukobyte.bootcampproject.business.dto.requests.create.users.instructor.CreateInstructorRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.users.ChangeUserPasswordRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.users.instructor.UpdateInstructorRequest;
+import com.torukobyte.bootcampproject.business.dto.responses.create.users.instructor.CreateInstructorResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.users.instructors.GetAllInstructorsResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.users.instructors.GetInstructorResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.update.users.instructor.UpdateInstructorResponse;
 import com.torukobyte.bootcampproject.core.util.results.DataResult;
 import com.torukobyte.bootcampproject.core.util.results.Result;
 import lombok.AllArgsConstructor;
@@ -26,7 +26,7 @@ public class InstructorsController {
     private InstructorService service;
 
     @GetMapping
-    DataResult<List<GetAllInstructorResponse>> getAll() {
+    DataResult<List<GetAllInstructorsResponse>> getAll() {
         return service.getAll();
     }
 

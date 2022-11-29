@@ -2,12 +2,12 @@ package com.torukobyte.bootcampproject.api.controllers.bootcamps;
 
 import com.torukobyte.bootcampproject.business.abstracts.bootcamps.BootcampService;
 import com.torukobyte.bootcampproject.business.constants.Paths;
-import com.torukobyte.bootcampproject.business.dto.requests.bootcamps.CreateBootcampRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.bootcamps.UpdateBootcampRequest;
-import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.CreateBootcampResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.GetAllBootcampResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.GetBootcampResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.bootcamps.UpdateBootcampResponse;
+import com.torukobyte.bootcampproject.business.dto.requests.create.bootcamp.CreateBootcampRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.bootcamp.UpdateBootcampRequest;
+import com.torukobyte.bootcampproject.business.dto.responses.create.bootcamp.CreateBootcampResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.bootcamps.GetAllBootcampsResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.bootcamps.GetBootcampResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.update.bootcamp.UpdateBootcampResponse;
 import com.torukobyte.bootcampproject.core.util.results.DataResult;
 import com.torukobyte.bootcampproject.core.util.results.Result;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class BootcampsController {
     private BootcampService service;
 
     @GetMapping
-    DataResult<List<GetAllBootcampResponse>> getAll() {
+    DataResult<List<GetAllBootcampsResponse>> getAll() {
         return service.getAll();
     }
 

@@ -2,13 +2,13 @@ package com.torukobyte.bootcampproject.api.controllers.users;
 
 import com.torukobyte.bootcampproject.business.abstracts.users.ApplicantService;
 import com.torukobyte.bootcampproject.business.constants.Paths;
-import com.torukobyte.bootcampproject.business.dto.requests.users.ChangeUserPasswordRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.users.applicants.CreateApplicantRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.users.applicants.UpdateApplicantRequest;
-import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.CreateApplicantResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.GetAllApplicantResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.GetApplicantResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.users.applicants.UpdateApplicantResponse;
+import com.torukobyte.bootcampproject.business.dto.requests.create.users.applicant.CreateApplicantRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.users.ChangeUserPasswordRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.users.applicant.UpdateApplicantRequest;
+import com.torukobyte.bootcampproject.business.dto.responses.create.users.applicant.CreateApplicantResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.users.applicants.GetAllApplicantsResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.users.applicants.GetApplicantResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.update.users.applicant.UpdateApplicantResponse;
 import com.torukobyte.bootcampproject.core.util.results.DataResult;
 import com.torukobyte.bootcampproject.core.util.results.Result;
 import lombok.AllArgsConstructor;
@@ -26,7 +26,7 @@ public class ApplicantsController {
     private ApplicantService service;
 
     @GetMapping
-    DataResult<List<GetAllApplicantResponse>> getAll() {
+    DataResult<List<GetAllApplicantsResponse>> getAll() {
         return service.getAll();
     }
 

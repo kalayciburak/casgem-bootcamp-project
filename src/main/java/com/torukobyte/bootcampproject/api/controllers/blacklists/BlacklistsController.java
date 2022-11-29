@@ -2,12 +2,12 @@ package com.torukobyte.bootcampproject.api.controllers.blacklists;
 
 import com.torukobyte.bootcampproject.business.abstracts.blacklists.BlacklistService;
 import com.torukobyte.bootcampproject.business.constants.Paths;
-import com.torukobyte.bootcampproject.business.dto.requests.blacklists.CreateBlacklistRequest;
-import com.torukobyte.bootcampproject.business.dto.requests.blacklists.UpdateBlacklistRequest;
-import com.torukobyte.bootcampproject.business.dto.responses.blacklists.CreateBlacklistResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.blacklists.GetAllBlacklistResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.blacklists.GetBlacklistResponse;
-import com.torukobyte.bootcampproject.business.dto.responses.blacklists.UpdateBlacklistResponse;
+import com.torukobyte.bootcampproject.business.dto.requests.create.blacklist.CreateBlacklistRequest;
+import com.torukobyte.bootcampproject.business.dto.requests.update.blacklist.UpdateBlacklistRequest;
+import com.torukobyte.bootcampproject.business.dto.responses.create.blacklist.CreateBlacklistResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.blacklists.GetAllBlacklistsResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.get.blacklists.GetBlacklistResponse;
+import com.torukobyte.bootcampproject.business.dto.responses.update.blacklist.UpdateBlacklistResponse;
 import com.torukobyte.bootcampproject.core.util.results.DataResult;
 import com.torukobyte.bootcampproject.core.util.results.Result;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class BlacklistsController {
     private BlacklistService service;
 
     @GetMapping
-    DataResult<List<GetAllBlacklistResponse>> getAll() {
+    DataResult<List<GetAllBlacklistsResponse>> getAll() {
         return service.getAll();
     }
 
