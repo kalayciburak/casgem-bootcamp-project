@@ -1,3 +1,3 @@
 ### Database diagram
 <br>
-<img src="https://user-images.githubusercontent.com/61664693/204063711-14793a88-ddf0-4beb-842b-8474f7f9c1d5.png" width='1000'>
+<img src="https://user-images.githubusercontent.com/61664693/204736126-989ae7cb-6b62-4685-a438-e48c067e058e.png" width='1000'>
