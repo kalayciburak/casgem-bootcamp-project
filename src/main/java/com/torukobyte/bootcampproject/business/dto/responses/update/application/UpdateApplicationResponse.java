@@ -13,5 +13,5 @@ public class UpdateApplicationResponse {
     private int id;
     private int bootcampId;
     private int applicantId;
-    private int state;
+    private int stateId;
 }

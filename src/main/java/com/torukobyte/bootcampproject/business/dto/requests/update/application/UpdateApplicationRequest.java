@@ -20,5 +20,5 @@ public class UpdateApplicationRequest {
     private int applicantId;
     @Min(value = 1, message = ValidationMessages.Application.MinState)
     @Max(value = 4, message = ValidationMessages.Application.MaxState)
-    private int state;
+    private int stateId;
 }

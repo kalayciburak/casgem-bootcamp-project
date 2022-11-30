@@ -13,5 +13,9 @@ public class GetApplicationResponse {
     private int id;
     private int bootcampId;
     private int applicantId;
-    private int state;
+    private int stateId;
+    private String stateInfo;
+    private String bootcampName;
+    private String userFirstName;
+    private String userLastName;
 }

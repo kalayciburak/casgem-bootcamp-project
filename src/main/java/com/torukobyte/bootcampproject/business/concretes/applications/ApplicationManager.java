@@ -18,6 +18,7 @@ import com.torukobyte.bootcampproject.core.util.results.Result;
 import com.torukobyte.bootcampproject.core.util.results.SuccessDataResult;
 import com.torukobyte.bootcampproject.core.util.results.SuccessResult;
 import com.torukobyte.bootcampproject.entities.applications.Application;
+import com.torukobyte.bootcampproject.entities.applications.State;
 import com.torukobyte.bootcampproject.repository.abstracts.applications.ApplicationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -61,6 +62,9 @@ public class ApplicationManager implements ApplicationService {
         checkIfUserHasApplication(request.getApplicantId());
         bootcampService.checkIfBootcampIsActive(request.getBootcampId());
         Application application = mapper.forRequest().map(request, Application.class);
+        State state = mapper.forResponse().map(application, State.class);
+        state.setId(3); // Default state is "Pending"
+        application.setState(state);
         application.setId(0);
         repository.save(application);
         CreateApplicationResponse data = mapper.forResponse().map(application, CreateApplicationResponse.class);
@@ -73,6 +77,7 @@ public class ApplicationManager implements ApplicationService {
         checkIfApplicationExistById(id);
         bootcampService.checkIfBootcampExistById(request.getBootcampId());
         applicantService.checkIfApplicantExistById(request.getApplicantId());
+        bootcampService.checkIfBootcampIsActive(request.getBootcampId());
         Application application = mapper.forRequest().map(request, Application.class);
         application.setId(id);
         repository.save(application);

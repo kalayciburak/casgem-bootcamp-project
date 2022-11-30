@@ -20,12 +20,13 @@ public class Application {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @Column(name = "state")
-    private int state;
     @ManyToOne()
     @JoinColumn(name = "applicant_id")
     private Applicant applicant;
     @ManyToOne()
     @JoinColumn(name = "bootcamp_id")
     private Bootcamp bootcamp;
+    @ManyToOne()
+    @JoinColumn(name = "state_id")
+    private State state;
 }
