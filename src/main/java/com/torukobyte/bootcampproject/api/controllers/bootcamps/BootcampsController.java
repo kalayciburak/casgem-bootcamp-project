@@ -8,8 +8,8 @@ import com.torukobyte.bootcampproject.business.dto.responses.create.bootcamp.Cre
 import com.torukobyte.bootcampproject.business.dto.responses.get.bootcamps.GetAllBootcampsResponse;
 import com.torukobyte.bootcampproject.business.dto.responses.get.bootcamps.GetBootcampResponse;
 import com.torukobyte.bootcampproject.business.dto.responses.update.bootcamp.UpdateBootcampResponse;
-import com.torukobyte.bootcampproject.core.util.results.DataResult;
-import com.torukobyte.bootcampproject.core.util.results.Result;
+import com.torukobyte.bootcampproject.core.utils.results.DataResult;
+import com.torukobyte.bootcampproject.core.utils.results.Result;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

@@ -9,8 +9,8 @@ import com.torukobyte.bootcampproject.business.dto.responses.create.users.instru
 import com.torukobyte.bootcampproject.business.dto.responses.get.users.instructors.GetAllInstructorsResponse;
 import com.torukobyte.bootcampproject.business.dto.responses.get.users.instructors.GetInstructorResponse;
 import com.torukobyte.bootcampproject.business.dto.responses.update.users.instructor.UpdateInstructorResponse;
-import com.torukobyte.bootcampproject.core.util.results.DataResult;
-import com.torukobyte.bootcampproject.core.util.results.Result;
+import com.torukobyte.bootcampproject.core.utils.results.DataResult;
+import com.torukobyte.bootcampproject.core.utils.results.Result;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

@@ -8,8 +8,8 @@ import com.torukobyte.bootcampproject.business.dto.responses.create.blacklist.Cr
 import com.torukobyte.bootcampproject.business.dto.responses.get.blacklists.GetAllBlacklistsResponse;
 import com.torukobyte.bootcampproject.business.dto.responses.get.blacklists.GetBlacklistResponse;
 import com.torukobyte.bootcampproject.business.dto.responses.update.blacklist.UpdateBlacklistResponse;
-import com.torukobyte.bootcampproject.core.util.results.DataResult;
-import com.torukobyte.bootcampproject.core.util.results.Result;
+import com.torukobyte.bootcampproject.core.utils.results.DataResult;
+import com.torukobyte.bootcampproject.core.utils.results.Result;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

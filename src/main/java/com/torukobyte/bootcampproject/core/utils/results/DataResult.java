@@ -1,4 +1,4 @@
-package com.torukobyte.bootcampproject.core.util.results;
+package com.torukobyte.bootcampproject.core.utils.results;
 
 public class DataResult<T> extends Result {
 

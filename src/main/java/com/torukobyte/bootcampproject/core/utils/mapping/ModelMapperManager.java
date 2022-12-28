@@ -1,4 +1,4 @@
-package com.torukobyte.bootcampproject.core.util.mapping;
+package com.torukobyte.bootcampproject.core.utils.mapping;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -13,8 +13,8 @@ public class ModelMapperManager implements ModelMapperService {
     @Override
     public ModelMapper forResponse() {
         this.modelMapper.getConfiguration()
-                        .setAmbiguityIgnored(true)
-                        .setMatchingStrategy(MatchingStrategies.LOOSE);
+                .setAmbiguityIgnored(true)
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
 
         return this.modelMapper;
     }
@@ -22,8 +22,8 @@ public class ModelMapperManager implements ModelMapperService {
     @Override
     public ModelMapper forRequest() {
         this.modelMapper.getConfiguration()
-                        .setAmbiguityIgnored(true)
-                        .setMatchingStrategy(MatchingStrategies.STANDARD);
+                .setAmbiguityIgnored(true)
+                .setMatchingStrategy(MatchingStrategies.STANDARD);
 
         return this.modelMapper;
     }

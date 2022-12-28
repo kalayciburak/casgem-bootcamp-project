@@ -1,4 +1,4 @@
-package com.torukobyte.bootcampproject.core.util.mapping;
+package com.torukobyte.bootcampproject.core.utils.mapping;
 
 import org.modelmapper.ModelMapper;
 
