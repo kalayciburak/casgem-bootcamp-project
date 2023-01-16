@@ -18,6 +18,8 @@ import com.torukobyte.bootcampproject.core.utils.results.SuccessResult;
 import com.torukobyte.bootcampproject.entities.bootcamps.Bootcamp;
 import com.torukobyte.bootcampproject.repository.abstracts.bootcamps.BootcampRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ValidationException;
@@ -32,6 +34,7 @@ public class BootcampManager implements BootcampService {
     private final ModelMapperService mapper;
 
     @Override
+    @Cacheable("bootcamps")
     public DataResult<List<GetAllBootcampsResponse>> getAll() {
 
         List<Bootcamp> bootcamps = repository.findAll();
@@ -53,6 +56,7 @@ public class BootcampManager implements BootcampService {
     }
 
     @Override
+    @CacheEvict(value = "bootcamps", allEntries = true)
     public DataResult<CreateBootcampResponse> add(CreateBootcampRequest request) {
         instructorService.checkIfInstructorExistById(request.getInstructorId());
         checkIfStartDateBiggerThanEndDate(request.getStartDate(), request.getEndDate());
